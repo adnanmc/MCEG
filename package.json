@@ -1,0 +1,22 @@
+{
+  "name": "mceg",
+  "version": "1.0.0",
+  "description": "Movement Control Event Generator REST api + Angular frontend",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adnanmc/MCEG.git"
+  },
+  "keywords": [
+    "MCEG"
+  ],
+  "author": "Mohammed Adnan. https://github.com/adnanmc",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adnanmc/MCEG/issues"
+  },
+  "homepage": "https://github.com/adnanmc/MCEG#readme"
+}
