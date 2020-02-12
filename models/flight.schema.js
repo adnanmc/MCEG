@@ -258,3 +258,6 @@ flightSchema.pre("save", function(next) {
   }
   next();
 });
+
+
+module.exports = flightSchema;
