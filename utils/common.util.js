@@ -13,23 +13,23 @@ const stg3DropLocation = networkFolders["stg2"]["send"];
 /////////////////////////////////////////////////////////////////////
 
 // validate date
-exports.validateDate = value => {
+const validateDate = value => {
   return moment(value, "YYYYMMDD", true).isValid();
 };
 // validate time
-exports.validateTime = value => {
-  return (x = moment(value, "HHmm", true).isValid());
+const validateTime = value => {
+  return moment(value, "HHmm", true).isValid();
 };
 
 // create file name
-exports.createFileName = eventName => {
+const createFileName = eventName => {
   let now = moment(new Date()).format("MM_DD_YYYY_HH_mm_ss_x");
   let fileName = `mceg_adhoc16_${eventName}_${now}`;
   return fileName;
 };
 
 // set the sendfolder regex: /^stg[1-3]$/
-exports.getSendFolder = stg => {
+const getSendFolder = stg => {
   stg = v(stg).upperCase();
   if (stg == "STG1") {
     sendfolder = stg1DropLocation;
@@ -42,7 +42,7 @@ exports.getSendFolder = stg => {
 };
 
 // sending request file to adhoc processor
-exports.sendAdhocFile = async (sendfolder, fileName, adhocString) => {
+const sendAdhocFile = async (sendfolder, fileName, adhocString) => {
   await fs.writeFile(`${sendfolder}/${fileName}.txt`, adhocString).then(err => {
     if (err) {
       return {
@@ -57,8 +57,7 @@ exports.sendAdhocFile = async (sendfolder, fileName, adhocString) => {
 };
 
 // validate baseline of adhoc request
-
-exports.adhocMainValidate = body => {
+const adhocMainValidate = body => {
   let stg = v(body.stg)
     .trim()
     .upperCase();
@@ -66,7 +65,7 @@ exports.adhocMainValidate = body => {
     .trim()
     .padLeft(4, "0");
   let utcOriginDate = v(body.utcOriginDate).trim();
-  let dateValidation = this.validateDate(utcOriginDate);
+  let dateValidation = validateDate(utcOriginDate);
   let origin = v(body.origin)
     .trim()
     .upperCase();
@@ -93,7 +92,7 @@ exports.adhocMainValidate = body => {
   ) {
     error = "flightNum must be number minimum 1 and maximum 4 digit.";
   } else if (
-    dateValidation.isValid() == false ||
+    dateValidation == false ||
     body.utcOriginDate == "" ||
     body.utcOriginDate == null
   ) {
@@ -124,8 +123,10 @@ exports.adhocMainValidate = body => {
   }
 
   if (error) {
-    return error;
+    return {error: error};
   } else {
-    return `ADH016_${flightNum}${utcOriginDate}${origin}${destination}`
+    return { adhocBaseString: `ADH016_${flightNum}${utcOriginDate}${origin}${destination}${stdUTC}`}
   }
 };
+
+module.exports = {validateDate, validateTime, createFileName, getSendFolder}; 
