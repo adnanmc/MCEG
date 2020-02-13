@@ -1,0 +1,11 @@
+{
+    "stg1": {
+        "send": "//cuaisilon/socappstgfile01/SOC_Share/Stg1/QA_MVC/adh_receive"
+    },
+    "stg2": {
+        "send": "//cuaisilon/socappstgfile01/SOC_Share/Stg2/QA_MVC/adh_receive"
+    },
+    "stg3": {
+        "send": "//cuaisilon/socappstgfile01/SOC_Share/Stg3/QA_MVC/adh_receive"
+    }
+}
