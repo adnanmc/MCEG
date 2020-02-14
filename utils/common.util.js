@@ -22,7 +22,7 @@ const validateTime = value => {
 };
 
 // create file name
-const createFileName = eventName => {
+const getFileName = eventName => {
   let now = moment(new Date()).format("MM_DD_YYYY_HH_mm_ss_x");
   let fileName = `mceg_adhoc16_${eventName}_${now}`;
   return fileName;
@@ -57,7 +57,9 @@ const sendAdhocFile = async (sendfolder, fileName, adhocString) => {
 };
 
 // validate baseline of adhoc request
-const adhocMainValidate = body => {
+const adhocMainString = body => {
+  // add any error to return
+  let error;
   let stg = v(body.stg)
     .trim()
     .upperCase();
@@ -77,7 +79,6 @@ const adhocMainValidate = body => {
     .padLeft(4, "0");
   let validateSTD = validateTime(stdUTC);
 
-  let error;
   if (
     (stg != "STG1" && stg != "STG2" && stg != "STG3") ||
     body.stg == "" ||
@@ -123,10 +124,44 @@ const adhocMainValidate = body => {
   }
 
   if (error) {
-    return {error: error};
+    return { error: error };
   } else {
-    return { adhocBaseString: `ADH016_${flightNum}${utcOriginDate}${origin}${destination}${stdUTC}`}
+    return {
+      adhocBaseString: `ADH016_${flightNum}${utcOriginDate}${origin}${destination}${stdUTC}`
+    };
   }
 };
 
-module.exports = {validateDate, validateTime, createFileName, getSendFolder}; 
+// validate OUT value of adhoc request
+const adhocOUTString = body => {
+  // add any error to return
+  let error;
+  let adhocBaseString = adhocMainString(body);
+  let outUTC = v(body.outUTC)
+    .trim()
+    .padLeft(4, "0");
+  let validateOUT = validateTime(outUTC);
+
+  if (
+    v.count(outUTC) != 4 ||
+    isNaN(outUTC) ||
+    validateOUT == false ||
+    body.outUTC == "" ||
+    body.outUTC == null
+  ) {
+    error =
+      "outUTC must be 4 digit valid time value in 24hr format like 0025, 1545 etc";
+  }
+
+  if (adhocBaseString.error) {
+    return adhocBaseString;
+  } else if (error) {
+    return { error: error };
+  } else {
+    return {
+      adhocOUTString: `${adhocBaseString.adhocBaseString}OUT${outUTC}`
+    };
+  }
+};
+
+module.exports = { validateDate, validateTime, getFileName, getSendFolder, sendAdhocFile, adhocMainString, adhocOUTString };

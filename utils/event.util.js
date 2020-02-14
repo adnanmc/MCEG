@@ -7,11 +7,11 @@ let body = {
     "utcOriginDate":"20170812",
     "origin":"JFK",
     "destination":"BOS",
-    "stdUTC":"1234",
-    "outUTC":"1345"
+    "stdUTC":"45",
+    "outUTC":"45"
   }
 
-let adhocOUTString = util.adhocMainValidate(body)
+let adhocOUTString = util.adhocOUTString(body)
 
 if (adhocOUTString.error) {
     console.log(adhocOUTString.error);
