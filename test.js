@@ -2,6 +2,85 @@ const fs = require("fs-extra");
 const utils = require("./utils/common.util");
 const moment = require("moment");
 const csv = require('csv-parser');
+var fieldsArray =  ['recordStatus',
+      'lastDateModified',
+      'lastTimeModified',
+      'lastUserToModify',
+      'legDepartureDate',
+      'airlineCode',
+      'identifier',
+      'sequence',
+      'flightOriginDay',
+      'numericFlightDate',
+      'numGMTDate',
+      'STDudt',
+      'STAudt',
+      'tailNumber',
+      'numLastDateModified',
+      'flightStatus',
+      'origin',
+      'STDLocal',
+      'dispatchDesk',
+      'STDGMTVariance',
+      'destination',
+      'STALocal',
+      'STAGMTVariance',
+      'OAGEquipmentType',
+      'ACConfiguration',
+      'serviceType',
+      'originGate',
+      'ETDlocal',
+      'ETDudt',
+      'TAXIutc',
+      'OUTudt',
+      'OFFudt',
+      'destinationGate',
+      'ETAlocal',
+      'ETAudt',
+      'ONudt',
+      'INudt',
+      'previousTailNumber',
+      'ETE',
+      'DCNutc',
+      'ETOutc',
+      'EONutc',
+      'EDTCutc',
+      'flightType',
+      'newDepartureCity',
+      'newArrivalCity',
+      'SchedOAGEquipType',
+      'OAGEquipSubType',
+      'csvFSDailyID',
+      'tailNumBeforeCancel',
+      'CTAUTC',
+      'cancelled',
+      'replaced',
+      'ATCStatus',
+      'scheduledFlightType',
+      'aircraftRouting',
+      'mealService',
+      'hub',
+      'landingRestriction',
+      'headStartFlight',
+      'actualDeparture',
+      'specialFlight',
+      'actualArrival',
+      'scheduledTaxiOut',
+      'scheduledTaxiIn',
+      'STOSetByUser',
+      'STISetByUser',
+      'CTFlightNumber'];
+let filePath = "./mceg_adhoc4.csv";
+fs.readFileSync(filePath, {encoding: 'utf-8'}, (err, data)=>{
+    let rawStringArray = data.split("\n");
+    return rawStringArray;
+}).then(rawStringArray => {
+    rawStringArray.map((row) => {
+        console.log(row);
+    })
+});
+
+
 
 
 // let stg = 'stg2';
@@ -27,31 +106,113 @@ const csv = require('csv-parser');
 // }
 
 
-const path = require('path');
-let filePath = "./mceg_adhoc4.csv";
 
-// var filePath = path.join(__dirname,'mceg_adhoc4.csv');
+// const path = require('path');
 
-let jsonData = [];
-let dataArray = [];
-dataArray = fs.readFileSync(filePath, {encoding: 'utf-8'}, (err, data) => {
-    if (err) {
-        console.log(err);
-    }
-    //The following line will split the csv file line by line and store each of it in the vraiable dataArray.
-    var dataArray = data.split("\n");
-    return dataArray
-    
-});
+// async function parseCSVData() {
+//     let filePath = "./mceg_adhoc4.csv";
 
-dataArray.forEach(element => { 
-    console.log(element); 
-  }); 
+// //This is the array which will convert the json data.
+// var jsonArray = [];
+// //This will read the file.
+// await fs.readFile(filePath,{encoding:'utf-8'},function(err,data){
+//     if(err){
+//        return  console.log(err);
+//     }
+//     //The following line will split the csv file line by line and store each of it in the vraiable dataArray.
+//     var dataArray = data.split("\n");
+//     //This line helps us to obtain the keys for various values in the file.
+//     var fieldsArray =  ['recordStatus',
+//       'lastDateModified',
+//       'lastTimeModified',
+//       'lastUserToModify',
+//       'legDepartureDate',
+//       'airlineCode',
+//       'identifier',
+//       'sequence',
+//       'flightOriginDay',
+//       'numericFlightDate',
+//       'numGMTDate',
+//       'STDudt',
+//       'STAudt',
+//       'tailNumber',
+//       'numLastDateModified',
+//       'flightStatus',
+//       'origin',
+//       'STDLocal',
+//       'dispatchDesk',
+//       'STDGMTVariance',
+//       'destination',
+//       'STALocal',
+//       'STAGMTVariance',
+//       'OAGEquipmentType',
+//       'ACConfiguration',
+//       'serviceType',
+//       'originGate',
+//       'ETDlocal',
+//       'ETDudt',
+//       'TAXIutc',
+//       'OUTudt',
+//       'OFFudt',
+//       'destinationGate',
+//       'ETAlocal',
+//       'ETAudt',
+//       'ONudt',
+//       'INudt',
+//       'previousTailNumber',
+//       'ETE',
+//       'DCNutc',
+//       'ETOutc',
+//       'EONutc',
+//       'EDTCutc',
+//       'flightType',
+//       'newDepartureCity',
+//       'newArrivalCity',
+//       'SchedOAGEquipType',
+//       'OAGEquipSubType',
+//       'csvFSDailyID',
+//       'tailNumBeforeCancel',
+//       'CTAUTC',
+//       'cancelled',
+//       'replaced',
+//       'ATCStatus',
+//       'scheduledFlightType',
+//       'aircraftRouting',
+//       'mealService',
+//       'hub',
+//       'landingRestriction',
+//       'headStartFlight',
+//       'actualDeparture',
+//       'specialFlight',
+//       'actualArrival',
+//       'scheduledTaxiOut',
+//       'scheduledTaxiIn',
+//       'STOSetByUser',
+//       'STISetByUser',
+//       'CTFlightNumber'];
+
+//     //The following loop creates an object for every line and then pushes it into the array.
+//     for(var i=1;i<dataArray.length;i++){
+//         var temp = {};
+//         //contains values which are separated by a comma in a line.
+//         var valuesArray = dataArray[i].split(",");
+//             for(var k=0;k<valuesArray.length;k++){
+//                 temp[fieldsArray[k]] = valuesArray[k]
+//             }   
+//             //pushes the object into the array.
+//             jsonArray.push(temp);
+            
+//     }
+//     //return result; //JavaScript object
+//     return JSON.stringify(jsonArray); //JSON
+//    });
+// }
+
+// let data = parseCSVData();
+// Promise.all([data()]);
+// console.log(data);
 
 
-
-
-// console.log(jsonData);
 
 // let results = [];
 // const parseCSVFile = async () => await fs.createReadStream(filePath)

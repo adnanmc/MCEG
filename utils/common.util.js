@@ -164,4 +164,4 @@ const adhocOUTString = body => {
   }
 };
 
-module.exports = { validateDate, validateTime, getFileName, getSendFolder, sendAdhocFile, adhocMainString, adhocOUTString };
+module.exports = { validateDate, validateTime, getFileName, getSendFolder, sendAdhocFile, adhocMainString };
