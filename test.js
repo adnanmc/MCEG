@@ -1,87 +1,98 @@
 const fs = require("fs-extra");
 const utils = require("./utils/common.util");
 const moment = require("moment");
-const csv = require('csv-parser');
-var fieldsArray =  ['recordStatus',
-      'lastDateModified',
-      'lastTimeModified',
-      'lastUserToModify',
-      'legDepartureDate',
-      'airlineCode',
-      'identifier',
-      'sequence',
-      'flightOriginDay',
-      'numericFlightDate',
-      'numGMTDate',
-      'STDudt',
-      'STAudt',
-      'tailNumber',
-      'numLastDateModified',
-      'flightStatus',
-      'origin',
-      'STDLocal',
-      'dispatchDesk',
-      'STDGMTVariance',
-      'destination',
-      'STALocal',
-      'STAGMTVariance',
-      'OAGEquipmentType',
-      'ACConfiguration',
-      'serviceType',
-      'originGate',
-      'ETDlocal',
-      'ETDudt',
-      'TAXIutc',
-      'OUTudt',
-      'OFFudt',
-      'destinationGate',
-      'ETAlocal',
-      'ETAudt',
-      'ONudt',
-      'INudt',
-      'previousTailNumber',
-      'ETE',
-      'DCNutc',
-      'ETOutc',
-      'EONutc',
-      'EDTCutc',
-      'flightType',
-      'newDepartureCity',
-      'newArrivalCity',
-      'SchedOAGEquipType',
-      'OAGEquipSubType',
-      'csvFSDailyID',
-      'tailNumBeforeCancel',
-      'CTAUTC',
-      'cancelled',
-      'replaced',
-      'ATCStatus',
-      'scheduledFlightType',
-      'aircraftRouting',
-      'mealService',
-      'hub',
-      'landingRestriction',
-      'headStartFlight',
-      'actualDeparture',
-      'specialFlight',
-      'actualArrival',
-      'scheduledTaxiOut',
-      'scheduledTaxiIn',
-      'STOSetByUser',
-      'STISetByUser',
-      'CTFlightNumber'];
+const csv = require("csv-parser");
+var fieldsArray = [
+  "recordStatus",
+  "lastDateModified",
+  "lastTimeModified",
+  "lastUserToModify",
+  "legDepartureDate",
+  "airlineCode",
+  "identifier",
+  "sequence",
+  "flightOriginDay",
+  "numericFlightDate",
+  "numGMTDate",
+  "STDudt",
+  "STAudt",
+  "tailNumber",
+  "numLastDateModified",
+  "flightStatus",
+  "origin",
+  "STDLocal",
+  "dispatchDesk",
+  "STDGMTVariance",
+  "destination",
+  "STALocal",
+  "STAGMTVariance",
+  "OAGEquipmentType",
+  "ACConfiguration",
+  "serviceType",
+  "originGate",
+  "ETDlocal",
+  "ETDudt",
+  "TAXIutc",
+  "OUTudt",
+  "OFFudt",
+  "destinationGate",
+  "ETAlocal",
+  "ETAudt",
+  "ONudt",
+  "INudt",
+  "previousTailNumber",
+  "ETE",
+  "DCNutc",
+  "ETOutc",
+  "EONutc",
+  "EDTCutc",
+  "flightType",
+  "newDepartureCity",
+  "newArrivalCity",
+  "SchedOAGEquipType",
+  "OAGEquipSubType",
+  "csvFSDailyID",
+  "tailNumBeforeCancel",
+  "CTAUTC",
+  "cancelled",
+  "replaced",
+  "ATCStatus",
+  "scheduledFlightType",
+  "aircraftRouting",
+  "mealService",
+  "hub",
+  "landingRestriction",
+  "headStartFlight",
+  "actualDeparture",
+  "specialFlight",
+  "actualArrival",
+  "scheduledTaxiOut",
+  "scheduledTaxiIn",
+  "STOSetByUser",
+  "STISetByUser",
+  "CTFlightNumber"
+];
 let filePath = "./mceg_adhoc4.csv";
-fs.readFileSync(filePath, {encoding: 'utf-8'}, (err, data)=>{
-    let rawStringArray = data.split("\n");
-    return rawStringArray;
-}).then(rawStringArray => {
-    rawStringArray.map((row) => {
-        console.log(row);
+fs.readFile(filePath, { encoding: "utf-8" }, (err, data) => {
+  let rawData = data.split("\n");
+  rawData.map(row => {
+    let rowArray = row.split(',');
+    rowArray.map((item, index)=>{
+        console.log(fieldsArray[index], item);
+        
     })
+  });
 });
+//         let rowArray = row.split(',');
+//         // let tempObj = {};
+//         // rowArray.map((value, index) => {
+//         //    tempObj[fieldsArray[index]] = value;
+//         // });
+//         // jsonData.push(tempObj);
 
-
-
+//     });
+//     return jsonData;
+// }).then(data => console.log(data));
 
 // let stg = 'stg2';
 
@@ -104,8 +115,6 @@ fs.readFileSync(filePath, {encoding: 'utf-8'}, (err, data)=>{
 // } catch(err) {
 //   console.error(err)
 // }
-
-
 
 // const path = require('path');
 
@@ -198,10 +207,10 @@ fs.readFileSync(filePath, {encoding: 'utf-8'}, (err, data)=>{
 //         var valuesArray = dataArray[i].split(",");
 //             for(var k=0;k<valuesArray.length;k++){
 //                 temp[fieldsArray[k]] = valuesArray[k]
-//             }   
+//             }
 //             //pushes the object into the array.
 //             jsonArray.push(temp);
-            
+
 //     }
 //     //return result; //JavaScript object
 //     return JSON.stringify(jsonArray); //JSON
@@ -211,8 +220,6 @@ fs.readFileSync(filePath, {encoding: 'utf-8'}, (err, data)=>{
 // let data = parseCSVData();
 // Promise.all([data()]);
 // console.log(data);
-
-
 
 // let results = [];
 // const parseCSVFile = async () => await fs.createReadStream(filePath)
@@ -287,4 +294,3 @@ fs.readFileSync(filePath, {encoding: 'utf-8'}, (err, data)=>{
 
 // Promise.all([parseCSVFile]);
 // console.log(results);
-
