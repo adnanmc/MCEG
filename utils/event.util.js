@@ -324,6 +324,66 @@ const adhocDELString = body => {
   }
 };
 
+
+// validate GTD value of adhoc request
+const adhocGTDString = body => {
+  // add any error to return
+  let error;
+  let adhocBaseString = adhocMainString(body);
+  let depGate = v(body.depGate)
+    .trim()
+    .padLeft(4, " ");
+
+  if (
+    v.count(depGate) != 4 ||
+    body.depGate == "" ||
+    body.depGate == null
+  ) {
+    error =
+      "depGate must be 4 character value";
+  }
+
+  if (adhocBaseString.error) {
+    return adhocBaseString;
+  } else if (error) {
+    return { error: error };
+  } else {
+    return {
+      adhocGTDString: `${adhocBaseString.adhocBaseString}GTD${depGate}`
+    };
+  }
+};
+
+
+// validate GTA value of adhoc request
+const adhocGTAString = body => {
+  // add any error to return
+  let error;
+  let adhocBaseString = adhocMainString(body);
+  let arrGate = v(body.arrGate)
+    .trim()
+    .padLeft(4, " ");
+
+  if (
+    v.count(arrGate) != 4 ||
+    body.arrGate == "" ||
+    body.arrGate == null
+  ) {
+    error =
+      "arrGate must be 4 character value";
+  }
+
+  if (adhocBaseString.error) {
+    return adhocBaseString;
+  } else if (error) {
+    return { error: error };
+  } else {
+    return {
+      adhocGTAString: `${adhocBaseString.adhocBaseString}GTA${arrGate}`
+    };
+  }
+};
+
 module.exports = {
   adhocOUTString,
   adhocOFFString,
@@ -335,5 +395,7 @@ module.exports = {
   adhocEONString,
   adhocSUBString,
   adhocCNLString,
-  adhocDELString
+  adhocDELString,
+  adhocGTDString,
+  adhocGTAString
 };
