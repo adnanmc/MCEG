@@ -2,6 +2,7 @@ const moment = require("moment");
 const fs = require("fs-extra");
 const v = require("voca");
 const util = require("./common.util");
+const validateTime = util.validateTime;
 
 // let body = {
 //     "stg": "stg1",
@@ -324,7 +325,6 @@ const adhocDELString = body => {
   }
 };
 
-
 // validate GTD value of adhoc request
 const adhocGTDString = body => {
   // add any error to return
@@ -334,13 +334,8 @@ const adhocGTDString = body => {
     .trim()
     .padLeft(4, " ");
 
-  if (
-    v.count(depGate) != 4 ||
-    body.depGate == "" ||
-    body.depGate == null
-  ) {
-    error =
-      "depGate must be 4 character value";
+  if (v.count(depGate) != 4 || body.depGate == "" || body.depGate == null) {
+    error = "depGate must be 4 character value";
   }
 
   if (adhocBaseString.error) {
@@ -354,7 +349,6 @@ const adhocGTDString = body => {
   }
 };
 
-
 // validate GTA value of adhoc request
 const adhocGTAString = body => {
   // add any error to return
@@ -364,13 +358,8 @@ const adhocGTAString = body => {
     .trim()
     .padLeft(4, " ");
 
-  if (
-    v.count(arrGate) != 4 ||
-    body.arrGate == "" ||
-    body.arrGate == null
-  ) {
-    error =
-      "arrGate must be 4 character value";
+  if (v.count(arrGate) != 4 || body.arrGate == "" || body.arrGate == null) {
+    error = "arrGate must be 4 character value";
   }
 
   if (adhocBaseString.error) {
@@ -380,6 +369,232 @@ const adhocGTAString = body => {
   } else {
     return {
       adhocGTAString: `${adhocBaseString.adhocBaseString}GTA${arrGate}`
+    };
+  }
+};
+
+// validate RIN value of adhoc request
+const adhocRINString = body => {
+  let adhocBaseString = adhocMainString(body);
+
+  if (adhocBaseString.error) {
+    return adhocBaseString;
+  } else {
+    return {
+      adhocRINString: `${adhocBaseString.adhocBaseString}RIN`
+    };
+  }
+};
+
+// validate ASN value of adhoc request
+const adhocASNString = body => {
+  // add any error to return
+  let error;
+  let adhocBaseString = adhocMainString(body);
+  let tailNum = v(body.tailNum)
+    .trim()
+    .padLeft(4, " ");
+
+  if (
+    v.count(tailNum) != 4 ||
+    isNaN(tailNum) ||
+    body.tailNum == "" ||
+    body.tailNum == null
+  ) {
+    error = "tailNum must be 3 or 4 digit";
+  }
+
+  if (adhocBaseString.error) {
+    return adhocBaseString;
+  } else if (error) {
+    return { error: error };
+  } else {
+    return {
+      adhocASNString: `${adhocBaseString.adhocBaseString}ASN${tailNum}`
+    };
+  }
+};
+
+// validate REM value of adhoc request
+const adhocREMString = body => {
+  let adhocBaseString = adhocMainString(body);
+
+  if (adhocBaseString.error) {
+    return adhocBaseString;
+  } else {
+    return {
+      adhocREMString: `${adhocBaseString.adhocBaseString}REM`
+    };
+  }
+};
+
+// validate UDD value of adhoc request
+const adhocUDDString = body => {
+  let adhocBaseString = adhocMainString(body);
+
+  if (adhocBaseString.error) {
+    return adhocBaseString;
+  } else {
+    return {
+      adhocUDDString: `${adhocBaseString.adhocBaseString}UDD`
+    };
+  }
+};
+
+// validate UDA value of adhoc request
+const adhocUDAString = body => {
+  let adhocBaseString = adhocMainString(body);
+
+  if (adhocBaseString.error) {
+    return adhocBaseString;
+  } else {
+    return {
+      adhocUDAString: `${adhocBaseString.adhocBaseString}UDA`
+    };
+  }
+};
+
+// validate RMD value of adhoc request
+const adhocRMDString = body => {
+  let adhocBaseString = adhocMainString(body);
+
+  if (adhocBaseString.error) {
+    return adhocBaseString;
+  } else {
+    return {
+      adhocRMDString: `${adhocBaseString.adhocBaseString}RMD`
+    };
+  }
+};
+
+// validate RMA value of adhoc request
+const adhocRMAString = body => {
+  let adhocBaseString = adhocMainString(body);
+
+  if (adhocBaseString.error) {
+    return adhocBaseString;
+  } else {
+    return {
+      adhocRMAString: `${adhocBaseString.adhocBaseString}RMA`
+    };
+  }
+};
+
+// validate GRD value of adhoc request
+const adhocGRDString = body => {
+  let adhocBaseString = adhocMainString(body);
+
+  if (adhocBaseString.error) {
+    return adhocBaseString;
+  } else {
+    return {
+      adhocGRDString: `${adhocBaseString.adhocBaseString}GRD`
+    };
+  }
+};
+
+// validate AIR value of adhoc request
+const adhocAIRString = body => {
+  let adhocBaseString = adhocMainString(body);
+
+  if (adhocBaseString.error) {
+    return adhocBaseString;
+  } else {
+    return {
+      adhocAIRString: `${adhocBaseString.adhocBaseString}AIR`
+    };
+  }
+};
+
+// validate DVC value of adhoc request
+const adhocDVCString = body => {
+  // add any error to return
+  let error;
+  let adhocBaseString = adhocMainString(body);
+  let etaUTC = v(body.etaUTC)
+    .trim()
+    .padLeft(4, "0");
+  let validateETA = validateTime(etaUTC);
+
+  let divertCity = v(body.divertCity)
+    .trim()
+    .upperCase();
+
+  if (
+    v.count(etaUTC) != 4 ||
+    isNaN(etaUTC) ||
+    validateETA == false ||
+    body.etaUTC == "" ||
+    body.etaUTC == null
+  ) {
+    error =
+      "etaUTC must be 4 digit valid time value in 24hr format like 0025, 1545 etc";
+  } else if (
+    v(divertCity).count() != 3 ||
+    v(divertCity).isAlpha() == false ||
+    body.divertCity == "" ||
+    body.divertCity == null
+  ) {
+    error = "divertCity must be 3 character airport code EX: JFK";
+  }
+
+  if (adhocBaseString.error) {
+    return adhocBaseString;
+  } else if (error) {
+    return { error: error };
+  } else {
+    return {
+      adhocDVCString: `${adhocBaseString.adhocBaseString}DVC${etaUTC}${divertCity}`
+    };
+  }
+};
+
+// validate NEW value of adhoc request
+const adhocNEWString = body => {
+  // add any error to return
+  let error;
+  let adhocBaseString = adhocMainString(body);
+  let staUTC = v(body.staUTC)
+    .trim()
+    .padLeft(4, "0");
+  let validateSTA = validateTime(staUTC);
+  let nextDayCrossover = v(body.nextDayCrossover).trim();
+  let tailNum = v(body.tailNum)
+    .trim()
+    .padLeft(4, " ");
+
+  if (
+    v.count(staUTC) != 4 ||
+    isNaN(staUTC) ||
+    validateSTA == false ||
+    body.staUTC == "" ||
+    body.staUTC == null
+  ) {
+    error =
+      "staUTC must be 4 digit valid time value in 24hr format like 0025, 1545 etc";
+  } else if (
+    (nextDayCrossover != "1" && nextDayCrossover != "0") ||
+    body.nextDayCrossover == "" ||
+    body.nextDayCrossover == null
+  ) {
+    error =
+      "nextDayCrossover must be either 1 or 0 which indicates true and false";
+  } else if (
+    v.count(tailNum) != 4 ||
+    isNaN(tailNum) ||
+    body.tailNum == "" ||
+    body.tailNum == null
+  ) {
+    error = "tailNum must be 3 or 4 digit";
+  }
+
+  if (adhocBaseString.error) {
+    return adhocBaseString;
+  } else if (error) {
+    return { error: error };
+  } else {
+    return {
+      adhocNEWString: `${adhocBaseString.adhocBaseString}NEW${staUTC}${nextDayCrossover}${tailNum}`
     };
   }
 };
@@ -397,5 +612,16 @@ module.exports = {
   adhocCNLString,
   adhocDELString,
   adhocGTDString,
-  adhocGTAString
+  adhocGTAString,
+  adhocRINString,
+  adhocASNString,
+  adhocREMString,
+  adhocUDDString,
+  adhocUDAString,
+  adhocRMDString,
+  adhocRMAString,
+  adhocGRDString,
+  adhocAIRString,
+  adhocDVCString,
+  adhocNEWString
 };

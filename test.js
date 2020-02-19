@@ -73,16 +73,25 @@ var fieldsArray = [
   "CTFlightNumber"
 ];
 let filePath = "./mceg_adhoc4.csv";
+let jsonData = [];
 fs.readFile(filePath, { encoding: "utf-8" }, (err, data) => {
   let rawData = data.split("\n");
   rawData.map(row => {
     let rowArray = row.split(',');
+    
+    let tempObject = {};
     rowArray.map((item, index)=>{
-        console.log(fieldsArray[index], item);
+        // console.log(fieldsArray[index], item);
+        tempObject[fieldsArray[index]] = item;
         
-    })
+    });
+    jsonData.push(tempObject);
+    
   });
+  console.log(jsonData);
+  
 });
+
 //         let rowArray = row.split(',');
 //         // let tempObj = {};
 //         // rowArray.map((value, index) => {
