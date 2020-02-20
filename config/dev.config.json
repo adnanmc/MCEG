@@ -3,9 +3,9 @@
         "send": "/mnt/gcsfile01/STG1/adh_receive"
     },
     "stg2": {
-        "send": "/mnt/gcsfile01/STG1/adh_receive"
+        "send": "/mnt/gcsfile01/STG2/adh_receive"
     },
     "stg3": {
-        "send": "/mnt/gcsfile01/STG1/adh_receive"
+        "send": "/mnt/gcsfile01/STG3/adh_receive"
     }
 }

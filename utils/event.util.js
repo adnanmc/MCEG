@@ -1,7 +1,6 @@
 const moment = require("moment");
 const v = require("voca");
-const util = require("./common.util");
-const validateTime = util.validateTime;
+const { adhocMainString, validateTime } = require("./common.util");
 
 // let body = {
 //     "stg": "stg1",

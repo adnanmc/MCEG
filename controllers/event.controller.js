@@ -21,10 +21,8 @@ exports.postOUT = asyncHandler( async (req, res, next) => {
       } else {
         res.status(400).json({ success: false, error: adhoc.error });
       }
-      
     } catch (err) {
+        console.log(err);
       res.status(400).json({ success: false });
     }
-
-    // res.sendStatus(201).json({ message: 'hi from out'});
   });
