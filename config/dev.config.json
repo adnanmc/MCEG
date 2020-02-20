@@ -1,0 +1,11 @@
+{
+    "stg1": {
+        "send": "/mnt/gcsfile01/STG1/adh_receive"
+    },
+    "stg2": {
+        "send": "/mnt/gcsfile01/STG1/adh_receive"
+    },
+    "stg3": {
+        "send": "/mnt/gcsfile01/STG1/adh_receive"
+    }
+}

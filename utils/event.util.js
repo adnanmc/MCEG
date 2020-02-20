@@ -1,5 +1,4 @@
 const moment = require("moment");
-const fs = require("fs-extra");
 const v = require("voca");
 const util = require("./common.util");
 const validateTime = util.validateTime;
@@ -41,6 +40,7 @@ const adhocOUTString = body => {
     return { error: error };
   } else {
     return {
+      sendFolder: adhocBaseString.sendFolder,
       adhocOUTString: `${adhocBaseString.adhocBaseString}OUT${outUTC}`
     };
   }
@@ -73,6 +73,7 @@ const adhocOFFString = body => {
     return { error: error };
   } else {
     return {
+      sendFolder: adhocBaseString.sendFolder,
       adhocOFFString: `${adhocBaseString.adhocBaseString}OFF9999${offUTC}`
     };
   }
@@ -105,6 +106,7 @@ const adhocONString = body => {
     return { error: error };
   } else {
     return {
+      sendFolder: adhocBaseString.sendFolder,
       adhocONString: `${adhocBaseString.adhocBaseString}ON_${onUTC}`
     };
   }
@@ -137,6 +139,7 @@ const adhocINString = body => {
     return { error: error };
   } else {
     return {
+      sendFolder: adhocBaseString.sendFolder,
       adhocINString: `${adhocBaseString.adhocBaseString}IN_9999${inUTC}`
     };
   }
@@ -169,6 +172,7 @@ const adhocETDString = body => {
     return { error: error };
   } else {
     return {
+      sendFolder: adhocBaseString.sendFolder,
       adhocETDString: `${adhocBaseString.adhocBaseString}ETD${etdUTC}`
     };
   }
@@ -201,6 +205,7 @@ const adhocETAString = body => {
     return { error: error };
   } else {
     return {
+      sendFolder: adhocBaseString.sendFolder,
       adhocETAString: `${adhocBaseString.adhocBaseString}ETA${etaUTC}`
     };
   }
@@ -233,6 +238,7 @@ const adhocETOString = body => {
     return { error: error };
   } else {
     return {
+      sendFolder: adhocBaseString.sendFolder,
       adhocETOString: `${adhocBaseString.adhocBaseString}ETO${etoUTC}`
     };
   }
@@ -265,6 +271,7 @@ const adhocEONString = body => {
     return { error: error };
   } else {
     return {
+      sendFolder: adhocBaseString.sendFolder,
       adhocEONString: `${adhocBaseString.adhocBaseString}EON${eonUTC}`
     };
   }
@@ -294,6 +301,7 @@ const adhocSUBString = body => {
     return { error: error };
   } else {
     return {
+      sendFolder: adhocBaseString.sendFolder,
       adhocSUBString: `${adhocBaseString.adhocBaseString}SUB${tailNum}`
     };
   }
@@ -307,6 +315,7 @@ const adhocCNLString = body => {
     return adhocBaseString;
   } else {
     return {
+      sendFolder: adhocBaseString.sendFolder,
       adhocCNLString: `${adhocBaseString.adhocBaseString}CNL`
     };
   }
@@ -320,6 +329,7 @@ const adhocDELString = body => {
     return adhocBaseString;
   } else {
     return {
+      sendFolder: adhocBaseString.sendFolder,
       adhocDELString: `${adhocBaseString.adhocBaseString}DEL`
     };
   }
@@ -344,6 +354,7 @@ const adhocGTDString = body => {
     return { error: error };
   } else {
     return {
+      sendFolder: adhocBaseString.sendFolder,
       adhocGTDString: `${adhocBaseString.adhocBaseString}GTD${depGate}`
     };
   }
@@ -368,6 +379,7 @@ const adhocGTAString = body => {
     return { error: error };
   } else {
     return {
+      sendFolder: adhocBaseString.sendFolder,
       adhocGTAString: `${adhocBaseString.adhocBaseString}GTA${arrGate}`
     };
   }
@@ -381,6 +393,7 @@ const adhocRINString = body => {
     return adhocBaseString;
   } else {
     return {
+      sendFolder: adhocBaseString.sendFolder,
       adhocRINString: `${adhocBaseString.adhocBaseString}RIN`
     };
   }
@@ -410,6 +423,7 @@ const adhocASNString = body => {
     return { error: error };
   } else {
     return {
+      sendFolder: adhocBaseString.sendFolder,
       adhocASNString: `${adhocBaseString.adhocBaseString}ASN${tailNum}`
     };
   }
@@ -423,6 +437,7 @@ const adhocREMString = body => {
     return adhocBaseString;
   } else {
     return {
+      sendFolder: adhocBaseString.sendFolder,
       adhocREMString: `${adhocBaseString.adhocBaseString}REM`
     };
   }
@@ -436,6 +451,7 @@ const adhocUDDString = body => {
     return adhocBaseString;
   } else {
     return {
+      sendFolder: adhocBaseString.sendFolder,
       adhocUDDString: `${adhocBaseString.adhocBaseString}UDD`
     };
   }
@@ -449,6 +465,7 @@ const adhocUDAString = body => {
     return adhocBaseString;
   } else {
     return {
+      sendFolder: adhocBaseString.sendFolder,
       adhocUDAString: `${adhocBaseString.adhocBaseString}UDA`
     };
   }
@@ -462,6 +479,7 @@ const adhocRMDString = body => {
     return adhocBaseString;
   } else {
     return {
+      sendFolder: adhocBaseString.sendFolder,
       adhocRMDString: `${adhocBaseString.adhocBaseString}RMD`
     };
   }
@@ -475,6 +493,7 @@ const adhocRMAString = body => {
     return adhocBaseString;
   } else {
     return {
+      sendFolder: adhocBaseString.sendFolder,
       adhocRMAString: `${adhocBaseString.adhocBaseString}RMA`
     };
   }
@@ -488,6 +507,7 @@ const adhocGRDString = body => {
     return adhocBaseString;
   } else {
     return {
+      sendFolder: adhocBaseString.sendFolder,
       adhocGRDString: `${adhocBaseString.adhocBaseString}GRD`
     };
   }
@@ -501,6 +521,7 @@ const adhocAIRString = body => {
     return adhocBaseString;
   } else {
     return {
+      sendFolder: adhocBaseString.sendFolder,
       adhocAIRString: `${adhocBaseString.adhocBaseString}AIR`
     };
   }
@@ -544,6 +565,7 @@ const adhocDVCString = body => {
     return { error: error };
   } else {
     return {
+      sendFolder: adhocBaseString.sendFolder,
       adhocDVCString: `${adhocBaseString.adhocBaseString}DVC${etaUTC}${divertCity}`
     };
   }
@@ -594,6 +616,7 @@ const adhocNEWString = body => {
     return { error: error };
   } else {
     return {
+      sendFolder: adhocBaseString.sendFolder,
       adhocNEWString: `${adhocBaseString.adhocBaseString}NEW${staUTC}${nextDayCrossover}${tailNum}`
     };
   }
