@@ -4,10 +4,10 @@ const v = require("voca");
 
 // getting network share file drop location from mceg-config.json
 let networkFolders;
-if (process.env.ENV == 'dev') {
-  networkFolders = require("../config/dev.config.json");
-} else {
+if (process.env.ENV == "prod") {
   networkFolders = require("../config/prod.config.json");
+} else {
+  networkFolders = require("../config/dev.config.json");
 }
 const stg1DropLocation = networkFolders["stg1"]["send"];
 const stg2DropLocation = networkFolders["stg2"]["send"];
@@ -41,22 +41,21 @@ const getSendFolder = stg => {
 
 // sending request file to adhoc processor
 const sendAdhocFile = async (sendFolder, eventName, adhocString) => {
-  return new Promise((resolve,reject) => {
+  return new Promise((resolve, reject) => {
     let now = moment(new Date()).format("MM_DD_YYYY_HH_mm_ss_x");
     let fileName = `mceg_adhoc16_${eventName}_${now}`;
     fs.writeFile(`${sendFolder}/${fileName}.txt`, adhocString).then(err => {
       if (err) {
         reject({
           error: `Error sending File: ${fileName}.txt with string: ${adhocString} Failed!!`
-        }) 
+        });
       } else {
         resolve({
           message: `File: ${fileName}.txt sent with string: ${adhocString}`
-        }) 
+        });
       }
     });
   });
-  
 };
 
 // validate baseline of adhoc request
@@ -87,11 +86,12 @@ const adhocMainString = body => {
     body.stg == "" ||
     body.stg == null
   ) {
-    errors = "stg must be stg1 or stg2 or stg3";
+    error = "stg must be stg1 or stg2 or stg3";
   } else if (
     v(flightNum).count() != 4 ||
     v(flightNum).isNumeric() == false ||
     body.flightNum == "" ||
+    body.flightNum == "0000" ||
     body.flightNum == null
   ) {
     error = "flightNum must be number minimum 1 and maximum 4 digit.";
@@ -137,5 +137,10 @@ const adhocMainString = body => {
   }
 };
 
-
-module.exports = { validateDate, validateTime, getSendFolder, sendAdhocFile, adhocMainString };
+module.exports = {
+  validateDate,
+  validateTime,
+  getSendFolder,
+  sendAdhocFile,
+  adhocMainString
+};
