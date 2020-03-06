@@ -1,9 +1,8 @@
 const { body, validationResult } = require("express-validator");
-const airporData = require("./airportData.json");
-const airportDataJson = JSON.parse(airporData);
-
-let airportCodeArray = airportDataJson.forEach(element => {
-    return element["IATA-code"];
+const airportDataFile = require("./utils/airportData.json");
+const airportCodesArray = [];
+airportDataFile.forEach(element => {
+  airportCodesArray.push(element.IATA);
 });
 const baseValidationRules = () => {
   let stg = body("stg")
@@ -23,6 +22,22 @@ const baseValidationRules = () => {
     .notEmpty()
     .matches(/([12]\d{3}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01]))/)
     .withMessage("utcOriginDate must be in the format YYYYMMDD");
+
+  let origin = body("origin")
+    .trim()
+    .notEmpty()
+    .isIn(airportCodesArray)
+    .not()
+    .contains("NULL")
+    .withMessage("origin must be valid airport code EX: JFK");
+
+  let destination = body("destination")
+    .trim()
+    .notEmpty()
+    .isIn(airportCodesArray)
+    .not()
+    .contains("NULL")
+    .withMessage("destination must be valid airport code EX: JFK");
 
   if (
     body("eventType")

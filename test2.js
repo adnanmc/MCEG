@@ -3,8 +3,11 @@
 // let result = stgRegex.test(stg);
 // console.log(result);
 const fs = require("fs");
-const airportFile = require("./utils/airportData.json");
+const airportDataFile = require("./utils/airportData.json");
 
-const airportCodesArray = airportFile.forEach(element => {
-  console.log(element);
+const airportCodesArray = [];
+airportDataFile.forEach(element => {
+  airportCodesArray.push(element.IATA);
 });
+
+console.log(airportCodesArray);

@@ -23,6 +23,9 @@ axios.get(openFlightDataURL).then(res => {
     tempObject["tzOlson"] = v(rawRowData[11]).trim('"');
     tempObject["type"] = v(rawRowData[12]).trim('"');
     tempObject["source"] = v(rawRowData[13]).trim('"');
+    if (tempObject["IATA"] == "\\N") {
+      tempObject.IATA = "NULL";
+    }
     data.push(tempObject);
   });
   let allDataFileName = "./utils/airportData.json";
