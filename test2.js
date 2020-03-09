@@ -3,11 +3,19 @@
 // let result = stgRegex.test(stg);
 // console.log(result);
 const fs = require("fs");
-const airportDataFile = require("./utils/airportData.json");
+const { adhoc16Schema } = require("./utils/eventValidator");
 
-const airportCodesArray = [];
-airportDataFile.forEach(element => {
-  airportCodesArray.push(element.IATA);
-});
+let body = {
+  stg: "stg1",
+  flightNum: "0055",
+  utcOriginDate: "20170812",
+  origin: "JFK",
+  destination: "BOS",
+  stdUTC: "1234",
+  staUTC: "1345",
+  nextDayCrossover: false,
+  tailNum: "245",
+  eventType: "NEW"
+};
 
-console.log(airportCodesArray);
+console.log(adhoc16Schema.validate(body));
