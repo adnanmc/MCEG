@@ -36,7 +36,12 @@ const adhoc16Schema = joi.object({
     .trim()
     .required()
     .pattern(/^stg[1-3]$/)
-    .error(new Error("stg must be stg1 or stg2 or stg3")),
+    .messages({
+      "string.base": "stg must be stg1 or stg2 or stg3",
+      "string.empty": "stg must be stg1 or stg2 or stg3",
+      "string.pattern.base": "stg must be stg1 or stg2 or stg3",
+      "any.required": "stg must be stg1 or stg2 or stg3"
+    }),
   flightNum: joi
     .string()
     .trim()
