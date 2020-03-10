@@ -1,5 +1,5 @@
-const eventUtil = require("../utils/event.util");
-const util = require("../utils/common.util");
+const { sendAdhoc16 } = require("../utils/event.util");
+const { adhoc16Schema } = require("../utils/eventValidator");
 const asyncHandler = require("../middleware/async");
 
 // @desc        post OUT event
@@ -8,15 +8,12 @@ const asyncHandler = require("../middleware/async");
 exports.postOUT = asyncHandler(async (req, res, next) => {
   try {
     let body = req.body;
-    let adhoc = await eventUtil.adhocOUTString(body);
-    if (adhoc.adhocOUTString) {
-      let sendFolder = adhoc.sendFolder;
-      let adhocOUTString = adhoc.adhocOUTString;
-      let fileSendStatus = await util.sendAdhocFile(
-        sendFolder,
-        "OUT",
-        adhocOUTString
-      );
+    let validation = await adhoc16Schema.validate(body);
+    let error = validation.error;
+    if (error) {
+      res.status(400).json({ success: false, error: error.details[0].message });
+    } else {
+      let fileSendStatus = await sendAdhoc16(validation.value);
       if (fileSendStatus.error) {
         res.status(400).json({ success: false, error: fileSendStatus.error });
       } else {
@@ -24,8 +21,6 @@ exports.postOUT = asyncHandler(async (req, res, next) => {
           .status(201)
           .json({ success: true, message: fileSendStatus.message });
       }
-    } else {
-      res.status(400).json({ success: false, error: adhoc.error });
     }
   } catch (err) {
     res.status(400).json({ success: false });

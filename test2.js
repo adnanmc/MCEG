@@ -24,5 +24,5 @@ if (error) {
   console.log(error.details[0].message);
 } else {
   console.log("success");
-  console.log(validation);
+  console.log(validation.value);
 }
