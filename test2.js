@@ -6,16 +6,16 @@ const fs = require("fs");
 const { adhoc16Schema } = require("./utils/eventValidator");
 
 let body = {
-  stg: "stg4",
+  stg: "stg1",
   flightNum: "0055",
   utcOriginDate: "20170812",
   origin: "jfk",
   destination: "bos",
   stdUTC: "1234",
-  staUTC: "1345",
-  nextDayCrossover: false,
+  staUTC: "0545",
+  nextDayCrossover: 1,
   tailNum: "245",
-  eventType: "NEW"
+  eventType: "new"
 };
 
 let validation = adhoc16Schema.validate(body, { abortEarly: false });

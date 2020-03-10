@@ -37,43 +37,51 @@ const adhoc16Schema = joi.object({
     .required()
     .pattern(/^stg[1-3]$/)
     .messages({
-      "string.base": "stg must be stg1 or stg2 or stg3",
-      "string.empty": "stg must be stg1 or stg2 or stg3",
-      "string.pattern.base": "stg must be stg1 or stg2 or stg3",
-      "any.required": "stg must be stg1 or stg2 or stg3"
+      "string.pattern.base": '"stg" must be stg1 or stg2 or stg3'
     }),
   flightNum: joi
     .string()
     .trim()
     .required()
     .pattern(/^\d{3}[1-9]$/)
-    .error(new Error("flightNum must be 4 digit. Ex: 0024")),
+    .messages({
+      "string.pattern.base": '"flightNum" must be 4 digit. Ex: 0024'
+    }),
   utcOriginDate: joi
     .string()
     .trim()
     .required()
     .pattern(/([12]\d{3}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01]))/)
-    .error(new Error("utcOriginDate must be in the format YYYYMMDD")),
+    .messages({
+      "string.pattern.base": '"utcOriginDate" must be in the format YYYYMMDD'
+    }),
   origin: joi
     .string()
     .trim()
     .required()
     .uppercase()
     .valid(...airportCodesArray)
-    .error(new Error("origin must be a valid airport code")),
+    .messages({
+      "any.only": '"origin" must be a valid IATA airport code'
+    }),
   destination: joi
     .string()
     .trim()
     .required()
     .uppercase()
     .valid(...airportCodesArray)
-    .error(new Error("destination must be a valid airport code")),
+    .messages({
+      "any.only": '"destination" must be a valid IATA airport code'
+    }),
   stdUTC: joi
     .string()
     .trim()
     .required()
     .pattern(/^(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]$/)
-    .error(new Error("stdUTC must be HHMM in 24hour format. Ex: 0059, 1523")),
+    .messages({
+      "string.pattern.base":
+        '"stdUTC" must be HHMM in 24hour format. Ex: 0059, 1523'
+    }),
   staUTC: joi.when("eventType", {
     is: "NEW",
     then: joi
@@ -81,15 +89,17 @@ const adhoc16Schema = joi.object({
       .trim()
       .required()
       .pattern(/^(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]$/)
-      .error(new Error("staUTC must be HHMM in 24hour format. Ex: 0059, 1523"))
+      .messages({
+        "string.pattern.base":
+          '"staUTC" must be HHMM in 24hour format. Ex: 0059, 1523'
+      })
   }),
   eventType: joi
     .string()
     .trim()
     .required()
     .uppercase()
-    .valid(...allowedEvents)
-    .error(new Error(`eventType must be one of: ${allowedEvents}`)),
+    .valid(...allowedEvents),
   outUTC: joi.when("eventType", {
     is: "OUT",
     then: joi
@@ -97,7 +107,10 @@ const adhoc16Schema = joi.object({
       .trim()
       .required()
       .pattern(/^(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]$/)
-      .error(new Error("outUTC must be HHMM in 24hour format. Ex: 0059, 1523"))
+      .messages({
+        "string.pattern.base":
+          '"outUTC" must be HHMM in 24hour format. Ex: 0059, 1523'
+      })
   }),
   offUTC: joi.when("eventType", {
     is: "OFF",
@@ -106,7 +119,10 @@ const adhoc16Schema = joi.object({
       .trim()
       .required()
       .pattern(/^(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]$/)
-      .error(new Error("offUTC must be HHMM in 24hour format. Ex: 0059, 1523"))
+      .messages({
+        "string.pattern.base":
+          '"offUTC" must be HHMM in 24hour format. Ex: 0059, 1523'
+      })
   }),
   onUTC: joi.when("eventType", {
     is: "ON",
@@ -115,7 +131,10 @@ const adhoc16Schema = joi.object({
       .trim()
       .required()
       .pattern(/^(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]$/)
-      .error(new Error("onUTC must be HHMM in 24hour format. Ex: 0059, 1523"))
+      .messages({
+        "string.pattern.base":
+          '"onUTC" must be HHMM in 24hour format. Ex: 0059, 1523'
+      })
   }),
   inUTC: joi.when("eventType", {
     is: "IN",
@@ -124,7 +143,10 @@ const adhoc16Schema = joi.object({
       .trim()
       .required()
       .pattern(/^(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]$/)
-      .error(new Error("inUTC must be HHMM in 24hour format. Ex: 0059, 1523"))
+      .messages({
+        "string.pattern.base":
+          '"inUTC" must be HHMM in 24hour format. Ex: 0059, 1523'
+      })
   }),
   etdUTC: joi.when("eventType", {
     is: "ETD",
@@ -133,25 +155,22 @@ const adhoc16Schema = joi.object({
       .trim()
       .required()
       .pattern(/^(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]$/)
-      .error(new Error("etdUTC must be HHMM in 24hour format. Ex: 0059, 1523"))
+      .messages({
+        "string.pattern.base":
+          '"etdUTC" must be HHMM in 24hour format. Ex: 0059, 1523'
+      })
   }),
   etaUTC: joi.when("eventType", {
-    is: "ETA",
+    is: joi.valid(...["ETA", "DVC"]),
     then: joi
       .string()
       .trim()
       .required()
       .pattern(/^(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]$/)
-      .error(new Error("etaUTC must be HHMM in 24hour format. Ex: 0059, 1523"))
-  }),
-  etaUTC: joi.when("eventType", {
-    is: "DVC",
-    then: joi
-      .string()
-      .trim()
-      .required()
-      .pattern(/^(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]$/)
-      .error(new Error("etaUTC must be HHMM in 24hour format. Ex: 0059, 1523"))
+      .messages({
+        "string.pattern.base":
+          '"etaUTC" must be HHMM in 24hour format. Ex: 0059, 1523'
+      })
   }),
   etoUTC: joi.when("eventType", {
     is: "ETO",
@@ -160,7 +179,10 @@ const adhoc16Schema = joi.object({
       .trim()
       .required()
       .pattern(/^(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]$/)
-      .error(new Error("etoUTC must be HHMM in 24hour format. Ex: 0059, 1523"))
+      .messages({
+        "string.pattern.base":
+          '"etoUTC" must be HHMM in 24hour format. Ex: 0059, 1523'
+      })
   }),
   eonUTC: joi.when("eventType", {
     is: "EON",
@@ -169,34 +191,21 @@ const adhoc16Schema = joi.object({
       .trim()
       .required()
       .pattern(/^(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]$/)
-      .error(new Error("etoUTC must be HHMM in 24hour format. Ex: 0059, 1523"))
+      .messages({
+        "string.pattern.base":
+          '"eonUTC" must be HHMM in 24hour format. Ex: 0059, 1523'
+      })
   }),
   tailNum: joi.when("eventType", {
-    is: "SUB",
+    is: joi.valid(...["SUB", "ASN", "NEW"]),
     then: joi
       .string()
       .trim()
       .required()
       .pattern(/^[1-9]\d{2,3}$/)
-      .error(new Error("tailNum must be 4 digit. Ex: 0548"))
-  }),
-  tailNum: joi.when("eventType", {
-    is: "ASN",
-    then: joi
-      .string()
-      .trim()
-      .required()
-      .pattern(/^[1-9]\d{2,3}$/)
-      .error(new Error("tailNum must be 4 digit. Ex: 0548"))
-  }),
-  tailNum: joi.when("eventType", {
-    is: "NEW",
-    then: joi
-      .string()
-      .trim()
-      .required()
-      .pattern(/^[1-9]\d{2,3}$/)
-      .error(new Error("tailNum must be 4 digit. Ex: 0548"))
+      .messages({
+        "string.pattern.base": '"tailNum" must be 3 or 4 digit. Ex: 548'
+      })
   }),
   depGate: joi.when("eventType", {
     is: "GTD",
@@ -206,7 +215,10 @@ const adhoc16Schema = joi.object({
       .trim()
       .uppercase()
       .regex(/^([a-zA-Z0-9]){1,4}$/)
-      .error(new Error("depGate must minimum 1 char max 4 char. Ex: 02A"))
+      .messages({
+        "string.pattern.base":
+          '"depGate" must minimum 1 char max 4 char. Ex: 02A'
+      })
   }),
   arrGate: joi.when("eventType", {
     is: "GTA",
@@ -216,7 +228,10 @@ const adhoc16Schema = joi.object({
       .trim()
       .uppercase()
       .regex(/^([a-zA-Z0-9]){1,4}$/)
-      .error(new Error("arrGate must minimum 1 char max 4 char. Ex: 01B"))
+      .messages({
+        "string.pattern.base":
+          '"arrGate" must minimum 1 char max 4 char. Ex: 02A'
+      })
   }),
   divertCity: joi.when("eventType", {
     is: "DVC",
@@ -226,14 +241,18 @@ const adhoc16Schema = joi.object({
       .required()
       .uppercase()
       .valid(...airportCodesArray)
-      .error(new Error("divertCity must be a valid airport code"))
+      .messages({
+        "string.pattern.base": '"divertCity" must be a valid IATA airport code'
+      })
   }),
   nextDayCrossover: joi.when("eventType", {
     is: "NEW",
     then: joi
       .boolean()
       .required()
-      .error(new Error("nextDayCrossover must be true or false"))
+      .messages({
+        "boolean.base": '"nextDayCrossover" must be true or false'
+      })
   })
 });
 
