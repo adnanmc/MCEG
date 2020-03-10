@@ -40,8 +40,9 @@ const getSendFolder = stg => {
 };
 
 // sending request file to adhoc processor
-const sendAdhocFile = async (sendFolder, eventName, adhocString) => {
+const sendAdhocFile = async (stg, eventName, adhocString) => {
   return new Promise((resolve, reject) => {
+    let sendFolder = getSendFolder(stg);
     let now = moment(new Date()).format("MM_DD_YYYY_HH_mm_ss_x");
     let fileName = `mceg_adhoc16_${eventName}_${now}`;
     fs.writeFile(`${sendFolder}/${fileName}.txt`, adhocString).then(err => {
