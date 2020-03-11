@@ -1,5 +1,5 @@
 const { sendAdhoc16 } = require("../utils/event.util");
-const { adhoc16Schema } = require("../utils/eventValidator");
+const { adhoc16SchemaValidation } = require("../utils/eventValidator");
 const asyncHandler = require("../middleware/async");
 
 // @desc        post OUT event
@@ -8,12 +8,11 @@ const asyncHandler = require("../middleware/async");
 exports.postOUT = asyncHandler(async (req, res, next) => {
   try {
     let body = req.body;
-    let validation = await adhoc16Schema.validate(body);
-    let error = validation.error;
+    const { error, value } = adhoc16SchemaValidation(body);
     if (error) {
-      res.status(400).json({ success: false, error: error.details[0].message });
+      res.status(400).json({ success: false, error: error });
     } else {
-      let fileSendStatus = await sendAdhoc16(validation.value);
+      let fileSendStatus = await sendAdhoc16(value);
       if (fileSendStatus.error) {
         res.status(400).json({ success: false, error: fileSendStatus.error });
       } else {

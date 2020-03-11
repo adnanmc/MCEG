@@ -1,4 +1,5 @@
 const joi = require("@hapi/joi");
+const v = require("voca");
 const airportDataFile = require("./airportData.json");
 const airportCodesArray = [];
 airportDataFile.forEach(element => {
@@ -256,6 +257,19 @@ const adhoc16Schema = joi.object({
   })
 });
 
+const adhoc16SchemaValidation = body => {
+  const { error, value } = adhoc16Schema.validate(body);
+  if (error) {
+    let userFriendlyErrorMessage = v(error.details[0].message).replaceAll(
+      '"',
+      "'"
+    );
+    return { error: userFriendlyErrorMessage };
+  } else {
+    return { value: value };
+  }
+};
+
 module.exports = {
-  adhoc16Schema
+  adhoc16SchemaValidation
 };

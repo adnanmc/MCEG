@@ -59,6 +59,9 @@ const sendAdhocFile = async (stg, eventName, adhocString) => {
   });
 };
 
+// make error message more user friendly
+const getErrorMessage = () => {};
+
 module.exports = {
   validateDate,
   validateTime,

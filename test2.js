@@ -3,10 +3,10 @@
 // let result = stgRegex.test(stg);
 // console.log(result);
 const fs = require("fs");
+const v = require("voca");
 const { adhoc16Schema } = require("./utils/eventValidator");
 
 let body = {
-  stg: "stg2",
   flightNum: "0055",
   utcOriginDate: "20200312",
   origin: "jfk",
@@ -21,7 +21,7 @@ let body = {
 let validation = adhoc16Schema.validate(body, { abortEarly: false });
 let error = validation.error;
 if (error) {
-  console.log(error.details[0].message);
+  console.log(v(error.details[0].message).replaceAll('"', "'"));
 } else {
   console.log("success");
   console.log(validation.value);
