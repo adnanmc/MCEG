@@ -2,10 +2,10 @@ const { sendAdhoc16 } = require("../utils/event.util");
 const { adhoc16SchemaValidation } = require("../utils/eventValidator");
 const asyncHandler = require("../middleware/async");
 
-// @desc        post OUT event
-// @route       POST /api/v1/out
+// @desc        post event
+// @route       POST /api/v1/events
 // @access      Public
-exports.postOUT = asyncHandler(async (req, res, next) => {
+exports.postEvent = asyncHandler(async (req, res, next) => {
   try {
     let body = req.body;
     const { error, value } = adhoc16SchemaValidation(body);

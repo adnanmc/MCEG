@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 // route files
-const eventRoutes = require('./routes/event.routes');
+const eventRoutes = require("./routes/event.routes");
 
 const app = express();
 
@@ -15,7 +15,7 @@ const app = express();
 app.use(express.json());
 
 // event route
-app.use("/api/v1/event", eventRoutes);
+app.use("/api/v1/events", eventRoutes);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8000;

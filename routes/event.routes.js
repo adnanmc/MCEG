@@ -1,7 +1,7 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { postOUT } = require('../controllers/event.controller');
+const { postEvent } = require("../controllers/event.controller");
 
-router.route('/out').post(postOUT);
+router.route("/").post(postEvent);
 
 module.exports = router;

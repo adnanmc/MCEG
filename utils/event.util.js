@@ -10,134 +10,161 @@ const sendAdhoc16 = async data => {
   let destination = data.destination;
   let stdUTC = v(data.stdUTC).padLeft(4, "0");
   let adhoc16BaseString = `ADH016${flightNum}${utcOriginDate}${origin}${destination}${stdUTC}`;
+  let outUTC;
+  let offUTC;
+  let onUTC;
+  let inUTC;
+  let etdUTC;
+  let etaUTC;
+  let etoUTC;
+  let eonUTC;
+  let tailNum;
+  let depGate;
+  let arrGate;
+  let divertCity;
+  let staUTC;
+  let nextDayCrossover;
+  let adhocString;
+  let fileStatus;
   switch (eventType) {
     case "OUT":
-      let outUTC = v(data.outUTC).padLeft(4, "0");
-      let adhocString = `${adhoc16BaseString}${eventType}${outUTC}`;
-      let fileStatus = await sendAdhocFile(stg, eventType, adhocString);
+      outUTC = v(data.outUTC).padLeft(4, "0");
+      adhocString = `${adhoc16BaseString}${eventType}${outUTC}`;
+      fileStatus = await sendAdhocFile(stg, eventType, adhocString);
       return fileStatus;
 
     case "OFF":
-      let offUTC = v(data.offUTC).padLeft(4, "0");
-      let adhocString = `${adhoc16BaseString}${eventType}9999${offUTC}`;
-      let fileStatus = await sendAdhocFile(stg, eventType, adhocString);
+      offUTC = v(data.offUTC).padLeft(4, "0");
+      adhocString = `${adhoc16BaseString}${eventType}9999${offUTC}`;
+      fileStatus = await sendAdhocFile(stg, eventType, adhocString);
       return fileStatus;
 
     case "ON":
-      let onUTC = v(data.onUTC).padLeft(4, "0");
-      let adhocString = `${adhoc16BaseString}${eventType}_${onUTC}`;
-      let fileStatus = await sendAdhocFile(stg, eventType, adhocString);
+      onUTC = v(data.onUTC).padLeft(4, "0");
+      adhocString = `${adhoc16BaseString}${eventType}_${onUTC}`;
+      fileStatus = await sendAdhocFile(stg, eventType, adhocString);
       return fileStatus;
 
     case "IN":
-      let inUTC = v(data.inUTC).padLeft(4, "0");
-      let adhocString = `${adhoc16BaseString}${eventType}_9999${inUTC}`;
-      let fileStatus = await sendAdhocFile(stg, eventType, adhocString);
+      inUTC = v(data.inUTC).padLeft(4, "0");
+      adhocString = `${adhoc16BaseString}${eventType}_9999${inUTC}`;
+      fileStatus = await sendAdhocFile(stg, eventType, adhocString);
       return fileStatus;
 
     case "ETD":
-      let etdUTC = v(data.etdUTC).padLeft(4, "0");
-      let adhocString = `${adhoc16BaseString}${eventType}${etdUTC}`;
-      let fileStatus = await sendAdhocFile(stg, eventType, adhocString);
+      etdUTC = v(data.etdUTC).padLeft(4, "0");
+      adhocString = `${adhoc16BaseString}${eventType}${etdUTC}`;
+      fileStatus = await sendAdhocFile(stg, eventType, adhocString);
       return fileStatus;
 
     case "ETA":
-      let etaUTC = v(data.etaUTC).padLeft(4, "0");
-      let adhocString = `${adhoc16BaseString}${eventType}${etaUTC}`;
-      let fileStatus = await sendAdhocFile(stg, eventType, adhocString);
+      etaUTC = v(data.etaUTC).padLeft(4, "0");
+      adhocString = `${adhoc16BaseString}${eventType}${etaUTC}`;
+      fileStatus = await sendAdhocFile(stg, eventType, adhocString);
       return fileStatus;
 
     case "ETO":
-      let etoUTC = v(data.etoUTC).padLeft(4, "0");
-      let adhocString = `${adhoc16BaseString}${eventType}${etoUTC}`;
-      let fileStatus = await sendAdhocFile(stg, eventType, adhocString);
+      etoUTC = v(data.etoUTC).padLeft(4, "0");
+      adhocString = `${adhoc16BaseString}${eventType}${etoUTC}`;
+      fileStatus = await sendAdhocFile(stg, eventType, adhocString);
       return fileStatus;
 
     case "EON":
-      let eonUTC = v(data.eonUTC).padLeft(4, "0");
-      let adhocString = `${adhoc16BaseString}${eventType}${eonUTC}`;
-      let fileStatus = await sendAdhocFile(stg, eventType, adhocString);
+      eonUTC = v(data.eonUTC).padLeft(4, "0");
+      adhocString = `${adhoc16BaseString}${eventType}${eonUTC}`;
+      fileStatus = await sendAdhocFile(stg, eventType, adhocString);
       return fileStatus;
 
     case "SUB":
-      let tailNum = v(data.tailNum).padLeft(4, " ");
-      let adhocString = `${adhoc16BaseString}${eventType}${tailNum}`;
-      let fileStatus = await sendAdhocFile(stg, eventType, adhocString);
+      tailNum = v(data.tailNum).padLeft(4, " ");
+      adhocString = `${adhoc16BaseString}${eventType}${tailNum}`;
+      fileStatus = await sendAdhocFile(stg, eventType, adhocString);
       return fileStatus;
 
     case "ASN":
-      let tailNum = v(data.tailNum).padLeft(4, " ");
-      let adhocString = `${adhoc16BaseString}${eventType}${tailNum}`;
-      let fileStatus = await sendAdhocFile(stg, eventType, adhocString);
+      tailNum = v(data.tailNum).padLeft(4, " ");
+      adhocString = `${adhoc16BaseString}${eventType}${tailNum}`;
+      fileStatus = await sendAdhocFile(stg, eventType, adhocString);
       return fileStatus;
 
     case "GTD":
-      let depGate = v(data.depGate).padLeft(4, " ");
-      let adhocString = `${adhoc16BaseString}${eventType}${depGate}`;
-      let fileStatus = await sendAdhocFile(stg, eventType, adhocString);
+      depGate = v(data.depGate).padLeft(4, " ");
+      adhocString = `${adhoc16BaseString}${eventType}${depGate}`;
+      fileStatus = await sendAdhocFile(stg, eventType, adhocString);
       return fileStatus;
 
     case "GTA":
-      let depGate = v(data.depGate).padLeft(4, " ");
-      let adhocString = `${adhoc16BaseString}${eventType}${depGate}`;
-      let fileStatus = await sendAdhocFile(stg, eventType, adhocString);
+      arrGate = v(data.arrGate).padLeft(4, " ");
+      adhocString = `${adhoc16BaseString}${eventType}${arrGate}`;
+      fileStatus = await sendAdhocFile(stg, eventType, adhocString);
       return fileStatus;
 
     case "DVC":
-      let etaUTC = v(data.etaUTC).padLeft(4, "0");
-      let divertCity = data.divertCity;
-      let adhocString = `${adhoc16BaseString}${eventType}${etaUTC}${divertCity}`;
-      let fileStatus = await sendAdhocFile(stg, eventType, adhocString);
+      etaUTC = v(data.etaUTC).padLeft(4, "0");
+      divertCity = data.divertCity;
+      adhocString = `${adhoc16BaseString}${eventType}${etaUTC}${divertCity}`;
+      fileStatus = await sendAdhocFile(stg, eventType, adhocString);
+      return fileStatus;
+
+    case "NEW":
+      staUTC = v(data.staUTC).padLeft(4, "0");
+      nextDayCrossover = "0";
+      if (data.nextDayCrossover === true) {
+        nextDayCrossover = "1";
+      }
+      tailNum = v(data.tailNum).padLeft(4, " ");
+      adhocString = `${adhoc16BaseString}${eventType}${staUTC}${nextDayCrossover}${tailNum}`;
+      fileStatus = await sendAdhocFile(stg, eventType, adhocString);
       return fileStatus;
 
     case "RIN":
-      let adhocString = `${adhoc16BaseString}${eventType}`;
-      let fileStatus = await sendAdhocFile(stg, eventType, adhocString);
+      adhocString = `${adhoc16BaseString}${eventType}`;
+      fileStatus = await sendAdhocFile(stg, eventType, adhocString);
       return fileStatus;
 
     case "REM":
-      let adhocString = `${adhoc16BaseString}${eventType}`;
-      let fileStatus = await sendAdhocFile(stg, eventType, adhocString);
+      adhocString = `${adhoc16BaseString}${eventType}`;
+      fileStatus = await sendAdhocFile(stg, eventType, adhocString);
       return fileStatus;
 
     case "UDD":
-      let adhocString = `${adhoc16BaseString}${eventType}`;
-      let fileStatus = await sendAdhocFile(stg, eventType, adhocString);
+      adhocString = `${adhoc16BaseString}${eventType}`;
+      fileStatus = await sendAdhocFile(stg, eventType, adhocString);
       return fileStatus;
 
     case "UDA":
-      let adhocString = `${adhoc16BaseString}${eventType}`;
-      let fileStatus = await sendAdhocFile(stg, eventType, adhocString);
+      adhocString = `${adhoc16BaseString}${eventType}`;
+      fileStatus = await sendAdhocFile(stg, eventType, adhocString);
       return fileStatus;
 
     case "RMD":
-      let adhocString = `${adhoc16BaseString}${eventType}`;
-      let fileStatus = await sendAdhocFile(stg, eventType, adhocString);
+      adhocString = `${adhoc16BaseString}${eventType}`;
+      fileStatus = await sendAdhocFile(stg, eventType, adhocString);
       return fileStatus;
 
     case "RMA":
-      let adhocString = `${adhoc16BaseString}${eventType}`;
-      let fileStatus = await sendAdhocFile(stg, eventType, adhocString);
+      adhocString = `${adhoc16BaseString}${eventType}`;
+      fileStatus = await sendAdhocFile(stg, eventType, adhocString);
       return fileStatus;
 
     case "GRD":
-      let adhocString = `${adhoc16BaseString}${eventType}`;
-      let fileStatus = await sendAdhocFile(stg, eventType, adhocString);
+      adhocString = `${adhoc16BaseString}${eventType}`;
+      fileStatus = await sendAdhocFile(stg, eventType, adhocString);
       return fileStatus;
 
     case "AIR":
-      let adhocString = `${adhoc16BaseString}${eventType}`;
-      let fileStatus = await sendAdhocFile(stg, eventType, adhocString);
+      adhocString = `${adhoc16BaseString}${eventType}`;
+      fileStatus = await sendAdhocFile(stg, eventType, adhocString);
       return fileStatus;
 
     case "CNL":
-      let adhocString = `${adhoc16BaseString}${eventType}`;
-      let fileStatus = await sendAdhocFile(stg, eventType, adhocString);
+      adhocString = `${adhoc16BaseString}${eventType}`;
+      fileStatus = await sendAdhocFile(stg, eventType, adhocString);
       return fileStatus;
 
     case "DEL":
-      let adhocString = `${adhoc16BaseString}${eventType}`;
-      let fileStatus = await sendAdhocFile(stg, eventType, adhocString);
+      adhocString = `${adhoc16BaseString}${eventType}`;
+      fileStatus = await sendAdhocFile(stg, eventType, adhocString);
       return fileStatus;
 
     default:

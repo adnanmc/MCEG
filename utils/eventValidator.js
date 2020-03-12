@@ -243,7 +243,7 @@ const adhoc16Schema = joi.object({
       .uppercase()
       .valid(...airportCodesArray)
       .messages({
-        "string.pattern.base": '"divertCity" must be a valid IATA airport code'
+        "any.only": '"divertCity" must be a valid IATA airport code'
       })
   }),
   nextDayCrossover: joi.when("eventType", {
