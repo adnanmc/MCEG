@@ -14,6 +14,11 @@ const app = express();
 // body parser
 app.use(express.json());
 
+// handle invalid json
+app.use(function(err, req, res, next) {
+  res.status(err.statusCode).json({ success: false, error: "Bad Request" });
+});
+
 // event route
 app.use("/api/v1/events", eventRoutes);
 
