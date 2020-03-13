@@ -34,8 +34,11 @@ exports.getAllFlights = async (req, res, next) => {
 
 exports.getSingleFlight = async (req, res, next) => {
   try {
+    let flightNumber = new String(req.params.flightNumber)
+      .trim()
+      .padStart(4, "0");
     const flightData = await STG1D0.find({
-      flightNumber: req.params.flightNum
+      flightNumber: flightNumber
     });
     res
       .status(200)
