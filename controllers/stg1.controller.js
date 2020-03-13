@@ -41,7 +41,7 @@ exports.getSingleFlight = async (req, res, next) => {
       .status(200)
       .json({ success: true, count: flightData.length, data: flightData });
   } catch (err) {
-    res.status(400).json({ success: false });
+    res.status(400).json({ success: false, error: err });
   }
 };
 

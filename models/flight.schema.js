@@ -14,6 +14,10 @@ const flightSchema = mongoose.Schema({
     required: [true, "flightNumber is required"],
     trim: true,
     maxlength: 4,
+    validate: [
+      /^\d{3}[1-9]$/,
+      "flightNumber must be padded with zero to keep 4 digit"
+    ],
     default: ""
   },
   sequence: {
@@ -27,18 +31,30 @@ const flightSchema = mongoose.Schema({
     type: String,
     required: [true, "localOriginDate is required"],
     trim: true,
+    validate: [
+      /([12]\d{3}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01]))/,
+      "localOriginDate must be YYYYMMDD"
+    ],
     default: ""
   },
   utcOriginDate: {
     type: String,
     required: [true, "utcOriginDate is required"],
     trim: true,
+    validate: [
+      /([12]\d{3}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01]))/,
+      "utcOriginDate must be YYYYMMDD"
+    ],
     default: ""
   },
   utcScheduledDepTime: {
     type: String,
     required: [true, "utcScheduledDepTime is required"],
     trim: true,
+    validate: [
+      /^(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]$/,
+      "utcScheduledDepTime must be padded with zero to keep 4 digit"
+    ],
     maxlength: 4,
     default: ""
   },
@@ -46,6 +62,10 @@ const flightSchema = mongoose.Schema({
     type: String,
     required: [true, "utcScheduledArrTime is required"],
     trim: true,
+    validate: [
+      /^(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]$/,
+      "utcScheduledArrTime must be padded with zero to keep 4 digit"
+    ],
     maxlength: 4,
     default: ""
   },
@@ -53,6 +73,10 @@ const flightSchema = mongoose.Schema({
     type: String,
     required: [true, "localScheduledDepTime is required"],
     trim: true,
+    validate: [
+      /^(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]$/,
+      "localScheduledDepTime must be padded with zero to keep 4 digit"
+    ],
     maxlength: 4,
     default: ""
   },
@@ -60,6 +84,10 @@ const flightSchema = mongoose.Schema({
     type: String,
     required: [true, "localScheduledArrTime is required"],
     trim: true,
+    validate: [
+      /^(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]$/,
+      "localScheduledArrTime must be padded with zero to keep 4 digit"
+    ],
     maxlength: 4,
     default: ""
   },
@@ -241,7 +269,7 @@ const flightSchema = mongoose.Schema({
 
 // pad flight number and time values with zeroes to maintain 4 digit
 // pad fsDailyId with zeros to maintain 10 digit
-flightSchema.pre("save", function(next) {
+flightSchema.pre("validate", function(next) {
   this.flightNumber = this.flightNumber.padStart(4, "0");
   this.utcScheduledDepTime = this.utcScheduledDepTime.padStart(4, "0");
   this.utcScheduledArrTime = this.utcScheduledArrTime.padStart(4, "0");
