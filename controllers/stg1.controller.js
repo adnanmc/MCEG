@@ -53,6 +53,8 @@ exports.insertAllFlights = async (req, res, next) => {
     const flightData = await STG1D0.insertMany(req.body);
     res.status(201).json({ success: true, flightData });
   } catch (err) {
+    console.log(err);
+
     res.status(400).json({
       success: false
     });

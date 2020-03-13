@@ -3,6 +3,10 @@ const cors = require("cors");
 // route files
 const eventRoutes = require("./routes/event.routes");
 const stg1Routes = require("./routes/stg1.routes");
+const connectDB = require("./config/db.config");
+
+// connect to db
+connectDB();
 
 const app = express();
 

@@ -11,46 +11,54 @@ const flightSchema = mongoose.Schema({
   // csv column name: identifier
   flightNumber: {
     type: String,
+    required: [true, "flightNumber is required"],
     trim: true,
     maxlength: 4,
     default: ""
   },
   sequence: {
     type: String,
+    required: [true, "sequence is required"],
     trim: true,
     maxlength: 4,
     default: ""
   },
   localOriginDate: {
     type: String,
+    required: [true, "localOriginDate is required"],
     trim: true,
     default: ""
   },
   utcOriginDate: {
     type: String,
+    required: [true, "utcOriginDate is required"],
     trim: true,
     default: ""
   },
   utcScheduledDepTime: {
     type: String,
+    required: [true, "utcScheduledDepTime is required"],
     trim: true,
     maxlength: 4,
     default: ""
   },
   utcScheduledArrTime: {
     type: String,
+    required: [true, "utcScheduledArrTime is required"],
     trim: true,
     maxlength: 4,
     default: ""
   },
   localScheduledDepTime: {
     type: String,
+    required: [true, "localScheduledDepTime is required"],
     trim: true,
     maxlength: 4,
     default: ""
   },
   localScheduledArrTime: {
     type: String,
+    required: [true, "localScheduledArrTime is required"],
     trim: true,
     maxlength: 4,
     default: ""
@@ -67,6 +75,7 @@ const flightSchema = mongoose.Schema({
   },
   tailNumber: {
     type: String,
+    required: [true, "tailNumber is required"],
     trim: true,
     default: ""
   },
@@ -82,6 +91,7 @@ const flightSchema = mongoose.Schema({
   },
   origin: {
     type: String,
+    required: [true, "origin is required"],
     trim: true,
     uppercase: true,
     minlength: 3,
@@ -90,6 +100,7 @@ const flightSchema = mongoose.Schema({
   },
   destination: {
     type: String,
+    required: [true, "destination is required"],
     trim: true,
     uppercase: true,
     minlength: 3,
@@ -125,24 +136,28 @@ const flightSchema = mongoose.Schema({
   },
   localEstimatedDepTime: {
     type: String,
+    required: [true, "localEstimatedDepTime is required"],
     trim: true,
     maxlength: 4,
     default: ""
   },
   utcEstimatedDepTime: {
     type: String,
+    required: [true, "utcEstimatedDepTime is required"],
     trim: true,
     maxlength: 4,
     default: ""
   },
   localEstimatedArrTime: {
     type: String,
+    required: [true, "localEstimatedArrTime is required"],
     trim: true,
     maxlength: 4,
     default: ""
   },
   utcEstimatedArrTime: {
     type: String,
+    required: [true, "utcEstimatedArrTime is required"],
     trim: true,
     maxlength: 4,
     default: ""
@@ -201,7 +216,7 @@ const flightSchema = mongoose.Schema({
     uppercase: true,
     minlength: 3,
     maxlength: 3,
-    default: ""
+    default: "NNN"
   },
   newArrivalCity: {
     type: String,
@@ -209,7 +224,7 @@ const flightSchema = mongoose.Schema({
     uppercase: true,
     minlength: 3,
     maxlength: 3,
-    default: ""
+    default: "NNN"
   },
   fsDailyId: {
     type: String,
@@ -258,6 +273,5 @@ flightSchema.pre("save", function(next) {
   }
   next();
 });
-
 
 module.exports = flightSchema;
