@@ -5,7 +5,7 @@ const {
   getSingleFlight,
   insertAllFlights,
   deleteAllFlights
-} = require("../controllers/stg1.controller");
+} = require("../controllers/flights.controller");
 
 router
   .route("/")

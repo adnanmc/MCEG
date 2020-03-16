@@ -1,20 +1,36 @@
 const {
   STG1D0,
+  STG2D0,
+  STG3D0,
   STG1D1,
+  STG2D1,
+  STG3D1,
   STG1D2,
+  STG2D2,
+  STG3D2,
   STG1D3,
+  STG2D3,
+  STG3D3,
   STG1D4,
+  STG2D4,
+  STG3D4,
   STG1D5,
+  STG2D5,
+  STG3D5,
   STG1D6,
-  STG1D7
-} = require("../models/mvt.model");
+  STG2D6,
+  STG3D6,
+  STG1D7,
+  STG2D7,
+  STG3D7
+} = require("../models/flightData.model");
 
 // ===============================================================================================
 // ------------------------------------------ Only D0 --------------------------------------------
 // ===============================================================================================
 
 // @desc        get all flight data
-// @route       get /api/v1/stg1/d0
+// @route       get /api/v1/:stg/:day
 // @access      Public
 
 exports.getAllFlights = async (req, res, next) => {

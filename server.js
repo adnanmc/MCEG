@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 // route files
 const eventRoutes = require("./routes/event.routes");
-const stg1Routes = require("./routes/stg1.routes");
+const flightDataRoutes = require("./routes/flightData.routes");
 const connectDB = require("./config/db.config");
 
 // connect to db
@@ -30,7 +30,7 @@ app.use(function(err, req, res, next) {
 app.use("/api/v1/events", eventRoutes);
 
 // stg1 route
-app.use("/api/v1/stg1", stg1Routes);
+app.use("/api/v1/flights", flightDataRoutes);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8000;
