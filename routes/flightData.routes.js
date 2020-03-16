@@ -8,11 +8,11 @@ const {
 } = require("../controllers/flights.controller");
 
 router
-  .route("/")
+  .route("/:stg/:day")
   .get(getAllFlights)
   .post(insertAllFlights)
   .delete(deleteAllFlights);
 
-router.route("/:flightNum").get(getSingleFlight);
+router.route("/:stg/:day/:flightNumber").get(getSingleFlight);
 
 module.exports = router;

@@ -14,10 +14,7 @@ const flightSchema = mongoose.Schema({
     required: [true, "flightNumber is required"],
     trim: true,
     maxlength: 4,
-    validate: [
-      /^\d{3}[1-9]$/,
-      "flightNumber must be padded with zero to keep 4 digit"
-    ],
+    validate: [/^\d{3}[1-9]$/, "flightNumber must be from 0001 to 9999"],
     default: ""
   },
   sequence: {
@@ -33,7 +30,7 @@ const flightSchema = mongoose.Schema({
     trim: true,
     validate: [
       /([12]\d{3}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01]))/,
-      "localOriginDate must be YYYYMMDD"
+      "localOriginDate must be in format YYYYMMDD"
     ],
     default: ""
   },

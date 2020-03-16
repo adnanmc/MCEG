@@ -1,3 +1,6 @@
+const ErrorResponse = require("../utils/errorResponse");
+const asyncHandler = require("../middleware/async");
+const { getFlight, getFlights } = require("../utils/flightData");
 const {
   STG1D0,
   STG2D0,
@@ -30,71 +33,56 @@ const {
 // ===============================================================================================
 
 // @desc        get all flight data
-// @route       get /api/v1/:stg/:day
+// @route       get /api/v1/flights/:stg/:day
 // @access      Public
 
-exports.getAllFlights = async (req, res, next) => {
-  try {
-    const flightData = await STG1D0.find();
-    res
-      .status(200)
-      .json({ success: true, count: flightData.length, data: flightData });
-  } catch (err) {
-    res.status(400).json({ success: false });
+exports.getAllFlights = asyncHandler(async (req, res, next) => {
+  const { errorResponse, flightData } = await getFlights(
+    req.params.stg,
+    req.params.day
+  );
+  if (errorResponse) {
+    return next(errorResponse);
   }
-};
+  res
+    .status(200)
+    .json({ success: true, count: flightData.length, data: flightData });
+});
 
 // @desc        search by flightNum
 // @route       get /api/v1/stg1/d0/:flightNum
 // @access      Public
 
-exports.getSingleFlight = async (req, res, next) => {
-  try {
-    let flightNumber = new String(req.params.flightNumber)
-      .trim()
-      .padStart(4, "0");
-    const flightData = await STG1D0.find({
-      flightNumber: flightNumber
-    });
-    res
-      .status(200)
-      .json({ success: true, count: flightData.length, data: flightData });
-  } catch (err) {
-    res.status(400).json({ success: false, error: err });
+exports.getSingleFlight = asyncHandler(async (req, res, next) => {
+  const { errorResponse, flightData } = await getFlight(
+    req.params.stg,
+    req.params.day,
+    req.params.flightNumber
+  );
+  if (errorResponse) {
+    return next(errorResponse);
   }
-};
+  res
+    .status(200)
+    .json({ success: true, count: flightData.length, data: flightData });
+});
 
 // @desc        insert many flights
 // @route       POST /api/v1/stg1/d0
 // @access      Public
-exports.insertAllFlights = async (req, res, next) => {
-  try {
-    const flightData = await STG1D0.insertMany(req.body);
-    res.status(201).json({ success: true, flightData });
-  } catch (err) {
-    console.log(err);
-
-    res.status(400).json({
-      success: false
-    });
-  }
-};
+exports.insertAllFlights = asyncHandler(async (req, res, next) => {
+  const flightData = await STG1D0.insertMany(req.body);
+  res.status(201).json({ success: true, flightData });
+});
 
 // @desc        delete all flight data for a day
 // @route       DELETE /api/v1/stg1/d0
 // @access      Public
 
-exports.deleteAllFlights = async (req, res, next) => {
-  try {
-    const flightData = await STG1D0.deleteMany();
-    if (!flightData) {
-      return res.status(400).json({ success: false });
-    }
-    res.status(200).json({ success: true, data: flightData });
-  } catch (err) {
-    res.status(400).json({ success: false });
-  }
-};
+exports.deleteAllFlights = asyncHandler(async (req, res, next) => {
+  const flightData = await STG1D0.deleteMany();
+  res.status(200).json({ success: true, data: flightData });
+});
 
 // ===============================================================================================
 // ------------------------------------------ Only D1 --------------------------------------------
