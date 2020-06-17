@@ -1,11 +1,11 @@
 {
-    "stg1": {
-        "send": "/mnt/gcsfile01/STG1/adh_receive"
-    },
-    "stg2": {
-        "send": "/mnt/gcsfile01/STG2/adh_receive"
-    },
-    "stg3": {
-        "send": "/mnt/gcsfile01/STG3/adh_receive"
-    }
+  "stg1": {
+    "send": "dev_drop_folder/stg1"
+  },
+  "stg2": {
+    "send": "dev_drop_folder/stg2"
+  },
+  "stg3": {
+    "send": "dev_drop_folder/stg3"
+  }
 }
