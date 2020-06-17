@@ -104,4 +104,6 @@ dist
 .tern-port
 
 # files
-mceg_adhoc16*.txt
+dev_drop_folder/stg1/*.txt
+dev_drop_folder/stg2/*.txt
+dev_drop_folder/stg3/*.txt
