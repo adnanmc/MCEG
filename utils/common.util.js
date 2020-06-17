@@ -1,6 +1,7 @@
 const moment = require('moment');
 const fs = require('fs-extra');
 const v = require('voca');
+const { v4: uuidv4 } = require('uuid');
 
 // getting network share file drop location from mceg-config.json
 let networkFolders;
@@ -43,19 +44,22 @@ const getSendFolder = (stg) => {
 const sendAdhocFile = async (stg, eventName, adhocString) => {
   return new Promise((resolve, reject) => {
     let sendFolder = getSendFolder(stg);
-    let now = moment(new Date()).format('MM_DD_YYYY_HH_mm_ss_x');
-    let fileName = `mceg_adhoc16_${eventName}_${now}`;
+    let timeStamp = moment(new Date()).format('MM-DD-YYYY--HH-mm-ss');
+    let randomString = uuidv4();
+    let fileName = `mceg-adhoc16-${eventName}-${randomString}`;
     fs.writeFile(`${sendFolder}/${fileName}.txt`, adhocString).then((err) => {
       if (err) {
         let data;
         reject({
           error: `Error sending File: ${fileName}.txt Failed!!`,
           string: adhocString,
+          timeStamp: timeStamp,
         });
       } else {
         resolve({
           message: `File: ${fileName}.txt sent`,
           string: adhocString,
+          timeStamp: timeStamp,
         });
       }
     });
