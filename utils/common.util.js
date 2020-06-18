@@ -70,20 +70,7 @@ const sendAdhocFile = async (stg, eventName, adhocString) => {
     }
   });
 };
-// fs.writeFile(`${sendFolder}/${fileName}.txt`, adhocString).then((value) => {
-//   resolve({
-//     message: `File: ${fileName}.txt sent`,
-//     string: adhocString,
-//     timeStamp: timeStamp,
-//   });
-// }, (reason) => {
-//   reject({
-//     error: `Error sending File: ${fileName}.txt Failed!!`,
-//     string: adhocString,
-//     timeStamp: timeStamp,
-//   });
-// }
-// });
+
 // make error message more user friendly
 const getErrorMessage = () => {};
 
