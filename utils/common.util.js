@@ -47,25 +47,43 @@ const sendAdhocFile = async (stg, eventName, adhocString) => {
     let timeStamp = moment(new Date()).format('MM-DD-YYYY--HH-mm-ss');
     let randomString = uuidv4();
     let fileName = `mceg-adhoc16-${eventName}-${randomString}`;
-    fs.writeFile(`${sendFolder}/${fileName}.txt`, adhocString).then((err) => {
-      if (err) {
-        let data;
-        reject({
-          error: `Error sending File: ${fileName}.txt Failed!!`,
-          string: adhocString,
-          timeStamp: timeStamp,
-        });
-      } else {
-        resolve({
+    let fileStatus = fs.writeFile(`${sendFolder}/${fileName}.txt`, adhocString)
+      .then((value) => {
+        return {
           message: `File: ${fileName}.txt sent`,
           string: adhocString,
           timeStamp: timeStamp,
-        });
-      }
-    });
+        };
+      })
+      .catch((err) => {
+        
+        return {
+          error: `Error sending File: ${fileName}.txt Failed!!`,
+          string: adhocString,
+          timeStamp: timeStamp,
+        };
+      });
+    if (fileStatus.error) {
+      reject(fileStatus);
+    } else {
+      resolve(fileStatus);
+    }
   });
 };
-
+// fs.writeFile(`${sendFolder}/${fileName}.txt`, adhocString).then((value) => {
+//   resolve({
+//     message: `File: ${fileName}.txt sent`,
+//     string: adhocString,
+//     timeStamp: timeStamp,
+//   });
+// }, (reason) => {
+//   reject({
+//     error: `Error sending File: ${fileName}.txt Failed!!`,
+//     string: adhocString,
+//     timeStamp: timeStamp,
+//   });
+// }
+// });
 // make error message more user friendly
 const getErrorMessage = () => {};
 
