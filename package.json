@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "env ENV=dev node server",
-    "prod": "env ENV=prod node server",
+    "prod": "pm2 start ecosystem.config.js",
+    "stop": "pm2 stop ecosystem.config.js",
     "airport": "node generateAirportData.js"
   },
   "repository": {
@@ -32,6 +33,7 @@
     "fs-extra": "^8.1.0",
     "moment": "^2.24.0",
     "mongoose": "^5.8.11",
+    "pm2": "^4.4.0",
     "uuid": "^8.1.0",
     "voca": "^1.4.0"
   }
