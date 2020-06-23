@@ -7,7 +7,7 @@ const flightDataRoutes = require("./routes/flightData.routes");
 const connectDB = require("./config/db.config");
 
 // connect to db
-connectDB();
+// connectDB();
 
 const app = express();
 
