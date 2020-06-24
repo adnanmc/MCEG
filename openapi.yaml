@@ -1,0 +1,1278 @@
+openapi: 3.0.1
+info:
+  title: MCEG - Movement Control Event Generator 
+  description: This API lets user perform events in Movement Control via the adhoc processor. Adhoc processor accepts .txt files as form of request.
+               The string that goes inside .txt files follows specific format and incorrect format can crash the adhoc processor.
+               This API aims to remove the need of understanding the format so that it can be used for testing and automation purpose.
+               
+               
+               
+               >****** PLEASE READ ******
+               
+               
+               > Base path `http://lsc64dgen08qdnx.jetblue.com/api/v1/events` is enough for all events, `/out, /off etc at the end are not required`. 
+               They are included because swagger dont allow multiple post request on same path in the docs.
+               
+               
+               >Dates are in `YYYYMMDD format` and `UTC only`. Time values are `HHMM 24 hr format` and `UTC only`.
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email:  mohammed.adnan@swagger.io
+  license:
+    name: MIT License
+    url: https://github.com/adnanmc/MCEG/blob/master/LICENSE
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+- url: http://lsc64dgen08qdnx.jetblue.com/api/v1/events
+- url: http://localhost:8000/api/v1/events
+tags:
+- name: OUT
+  description: Aircraft has left the Gate and sets the flight's Actual Departure timestamp. In MVT it changes OUT time in UTC.
+- name: OFF
+  description: Aircraft has taken off the ground. In MVT it changes OFF time in UTC.
+- name: ON
+  description: Aircraft On the ground, has landed. In MVT it changes ON time in UTC.
+- name: IN
+  description: Aircraft at the Gate. In MVT it changes IN time in UTC.
+- name: ETD
+  description: Estimated time of departure for a flight. In MVT it changes ETD time in UTC.
+- name: ETA
+  description: Estimated time of arrival for a flight. In MVT it changes ETA time in UTC.
+- name: ETO
+  description: Estimated Off time for an operated flight. In MVT it changes ETO time in UTC.
+- name: EON
+  description: Estimated On Time. In MVT it changes EON time in UTC.
+- name: SUB
+  description: Substitute tail number within the same aircraft equipment family e.g. change in tail number between 32F and 32A. In MVT it changes tail number to the one you give.
+- name: CNL
+  description: Cancel. A flight segment that will not be operated/flown but is retained as part of the flight schedule. This does not delete the flight from database. A canceled flight can be reinstated, a deleted flight cannot.
+- name: DEL
+  description: Delete flight from Flight Trac system. Use the NEW event if you need to re-add the deleted flight.
+- name: GTD
+  description: Departure gate change. In MVT it will change existing or add if there was no previous departure gate.
+- name: GTA
+  description: Arrival gate change. In MVT it will change existing or add if there was no previous arrival gate.
+- name: RIN
+  description: Reinstate a flight after the it was cancelled. Flight leg becomes same as it was before cancel.
+- name: ASN
+  description: Initial assignment of a tail number to a flight. Use this to undo REM event.
+- name: REM
+  description: Remove the tail number associated to the flight. This does not cancel the flight. Use ASN to add a new tail number.
+- name: UDD
+  description: Undelay Departure. Removes any departure delay on the flight.
+- name: UDA
+  description: Undelay Arrival. Removes any arrival delay on the flight.
+- name: RMD
+  description: Remove departure time on the flight. This removes OUT and OFF time in MVT.
+- name: RMA
+  description: Remove arrival time on the flight. This removes ON and IN time in MVT.
+- name: GRD
+  description: Ground Turnback. A scheduled flight that has left the gate, not yet departed, returns to a gate. Only OUT must be present for that flight.
+- name: AIR
+  description: Air Turnback, makes the return to origin city of a flight that has taken off. Both OUT and OFF time must be present fot that flight.
+- name: DVC
+  description: Divert And Continue. Adds an intermediate stop between the departure and arrival stations of the current flight (example- DAL - PHX becomes DAL - HOU - PHX) and Continue to the scheduled arrival station. This breaks the flight into two segment, origin to diversion city and diversion city to original destination.
+- name: NEW
+  description: Add new flight into the database.
+
+paths:
+  /out:
+    post:
+      tags:
+      - OUT
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OUT'
+        required: true
+      responses:
+        201:
+          description: success
+          content: {}
+        400:
+          description: Invalid input
+          content: {}
+      x-codegen-request-body-name: body
+      
+  /off:
+    post:
+      tags:
+      - OFF
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OFF'
+        required: true
+      responses:
+        201:
+          description: success
+          content: {}
+        400:
+          description: Invalid input
+          content: {}
+      
+  /on:
+    post:
+      tags:
+      - ON
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ON'
+        required: true
+      responses:
+        201:
+          description: success
+          content: {}
+        400:
+          description: Invalid input
+          content: {}
+
+      
+      x-codegen-request-body-name: body
+  /in:
+    post:
+      tags:
+      - IN
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IN'
+        required: true
+      responses:
+        201:
+          description: success
+          content: {}
+        400:
+          description: Invalid input
+          content: {}
+
+      
+      x-codegen-request-body-name: body
+      
+  /etd:
+    post:
+      tags:
+      - ETD
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ETD'
+        required: true
+      responses:
+        201:
+          description: success
+          content: {}
+        400:
+          description: Invalid input
+          content: {}
+
+      
+      x-codegen-request-body-name: body
+      
+  /eta:
+    post:
+      tags:
+      - ETA
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ETA'
+        required: true
+      responses:
+        201:
+          description: success
+          content: {}
+        400:
+          description: Invalid input
+          content: {}
+
+      
+      x-codegen-request-body-name: body
+      
+  /eto:
+    post:
+      tags:
+      - ETO
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ETO'
+        required: true
+      responses:
+        201:
+          description: success
+          content: {}
+        400:
+          description: Invalid input
+          content: {}
+
+      
+      x-codegen-request-body-name: body
+      
+  /eon:
+    post:
+      tags:
+      - EON
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EON'
+        required: true
+      responses:
+        201:
+          description: success
+          content: {}
+        400:
+          description: Invalid input
+          content: {}
+
+      
+      x-codegen-request-body-name: body
+      
+  /sub:
+    post:
+      tags:
+      - SUB
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SUB'
+        required: true
+      responses:
+        201:
+          description: success
+          content: {}
+        400:
+          description: Invalid input
+          content: {}
+
+      
+      x-codegen-request-body-name: body
+      
+  /asn:
+    post:
+      tags:
+      - ASN
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ASN'
+        required: true
+      responses:
+        201:
+          description: success
+          content: {}
+        400:
+          description: Invalid input
+          content: {}
+
+      
+      x-codegen-request-body-name: body
+      
+  /cnl:
+    post:
+      tags:
+      - CNL
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CNL'
+        required: true
+      responses:
+        201:
+          description: success
+          content: {}
+        400:
+          description: Invalid input
+          content: {}
+
+      
+      x-codegen-request-body-name: body
+      
+  /del:
+    post:
+      tags:
+      - DEL
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DEL'
+        required: true
+      responses:
+        201:
+          description: success
+          content: {}
+        400:
+          description: Invalid input
+          content: {}
+
+      
+      x-codegen-request-body-name: body
+      
+  /rin:
+    post:
+      tags:
+      - RIN
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RIN'
+        required: true
+      responses:
+        201:
+          description: success
+          content: {}
+        400:
+          description: Invalid input
+          content: {}
+
+      
+      x-codegen-request-body-name: body
+      
+  /rem:
+    post:
+      tags:
+      - REM
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/REM'
+        required: true
+      responses:
+        201:
+          description: success
+          content: {}
+        400:
+          description: Invalid input
+          content: {}
+
+      
+      x-codegen-request-body-name: body
+      
+  /udd:
+    post:
+      tags:
+      - UDD
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UDD'
+        required: true
+      responses:
+        201:
+          description: success
+          content: {}
+        400:
+          description: Invalid input
+          content: {}
+
+      
+      x-codegen-request-body-name: body
+      
+  /uda:
+    post:
+      tags:
+      - UDA
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UDA'
+        required: true
+      responses:
+        201:
+          description: success
+          content: {}
+        400:
+          description: Invalid input
+          content: {}
+
+      
+      x-codegen-request-body-name: body
+      
+  /rmd:
+    post:
+      tags:
+      - RMD
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RMD'
+        required: true
+      responses:
+        201:
+          description: success
+          content: {}
+        400:
+          description: Invalid input
+          content: {}
+
+      
+      x-codegen-request-body-name: body
+      
+  /rma:
+    post:
+      tags:
+      - RMA
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RMA'
+        required: true
+      responses:
+        201:
+          description: success
+          content: {}
+        400:
+          description: Invalid input
+          content: {}
+
+      
+      x-codegen-request-body-name: body
+      
+  /air:
+    post:
+      tags:
+      - AIR
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AIR'
+        required: true
+      responses:
+        201:
+          description: success
+          content: {}
+        400:
+          description: Invalid input
+          content: {}
+
+      
+      x-codegen-request-body-name: body
+      
+  /grd:
+    post:
+      tags:
+      - GRD
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GRD'
+        required: true
+      responses:
+        201:
+          description: success
+          content: {}
+        400:
+          description: Invalid input
+          content: {}
+
+      
+      x-codegen-request-body-name: body
+      
+  /gtd:
+    post:
+      tags:
+      - GTD
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GTD'
+        required: true
+      responses:
+        201:
+          description: success
+          content: {}
+        400:
+          description: Invalid input
+          content: {}
+
+      
+      x-codegen-request-body-name: body
+      
+  /gta:
+    post:
+      tags:
+      - GTA
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GTA'
+        required: true
+      responses:
+        201:
+          description: success
+          content: {}
+        400:
+          description: Invalid input
+          content: {}
+
+      
+      x-codegen-request-body-name: body
+      
+  /dvc:
+    post:
+      tags:
+      - DVC
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DVC'
+        required: true
+      responses:
+        201:
+          description: success
+          content: {}
+        400:
+          description: Invalid input
+          content: {}
+
+      
+      x-codegen-request-body-name: body
+      
+  /new:
+    post:
+      tags:
+      - NEW
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NEW'
+        required: true
+      responses:
+        201:
+          description: success
+          content: {}
+        400:
+          description: Invalid input
+          content: {}
+
+      
+      x-codegen-request-body-name: body
+
+
+    
+components:
+  schemas:
+    OUT:
+      type: object
+      properties:
+        stg:
+          type: string
+          example: stg2
+        eventType:
+          type: string
+          example: out
+        flightNum:
+          type: string
+          example: "0022"
+        utcOriginDate:
+          type: string
+          example: "20200615"
+          description: must be in YYYYMMDD format
+        origin:
+          type: string
+          example: jfk
+        destination:
+          type: string
+          example: bos
+        stdUTC:
+          type: string
+          example: "1100"
+        outUTC:
+          type: string
+          example: "1105"
+    OFF:
+      type: object
+      properties:
+        stg:
+          type: string
+          example: stg2
+        eventType:
+          type: string
+          example: off
+        flightNum:
+          type: string
+          example: "0022"
+        utcOriginDate:
+          type: string
+          example: "20200615"
+          description: must be in YYYYMMDD format
+        origin:
+          type: string
+          example: jfk
+        destination:
+          type: string
+          example: bos
+        stdUTC:
+          type: string
+          example: "1100"
+        outUTC:
+          type: string
+          example: "1105"
+        offUTC:
+          type: string
+          example: "1110"
+    ON:
+      type: object
+      properties:
+        stg:
+          type: string
+          example: stg2
+        eventType:
+          type: string
+          example: on
+        flightNum:
+          type: string
+          example: "0022"
+        utcOriginDate:
+          type: string
+          example: "20200615"
+          description: must be in YYYYMMDD format
+        origin:
+          type: string
+          example: jfk
+        destination:
+          type: string
+          example: bos
+        stdUTC:
+          type: string
+          example: "1100"
+        onUTC:
+          type: string
+          example: "1230"
+      
+    IN:
+      type: object
+      properties:
+        stg:
+          type: string
+          example: stg2
+        eventType:
+          type: string
+          example: in
+        flightNum:
+          type: string
+          example: "0022"
+        utcOriginDate:
+          type: string
+          example: "20200615"
+          description: must be in YYYYMMDD format
+        origin:
+          type: string
+          example: jfk
+        destination:
+          type: string
+          example: bos
+        stdUTC:
+          type: string
+          example: "1100"
+        onUTC:
+          type: string
+          example: "1230"   
+        inUTC:
+          type: string
+          example: "1235"   
+      
+    ETD:
+      type: object
+      properties:
+        stg:
+          type: string
+          example: stg2
+        eventType:
+          type: string
+          example: etd
+        flightNum:
+          type: string
+          example: "0022"
+        utcOriginDate:
+          type: string
+          example: "20200615"
+          description: must be in YYYYMMDD format
+        origin:
+          type: string
+          example: jfk
+        destination:
+          type: string
+          example: bos
+        stdUTC:
+          type: string
+          example: "1100"
+        etdUTC:
+          type: string
+          example: "1105"   
+      
+    ETA:
+      type: object
+      properties:
+        stg:
+          type: string
+          example: stg2
+        eventType:
+          type: string
+          example: eta
+        flightNum:
+          type: string
+          example: "0022"
+        utcOriginDate:
+          type: string
+          example: "20200615"
+          description: must be in YYYYMMDD format
+        origin:
+          type: string
+          example: jfk
+        destination:
+          type: string
+          example: bos
+        stdUTC:
+          type: string
+          example: "1100"
+        etaUTC:
+          type: string
+          example: "1235"   
+      
+    DVC:
+      type: object
+      properties:
+        stg:
+          type: string
+          example: stg2
+        eventType:
+          type: string
+          example: dvc
+        flightNum:
+          type: string
+          example: "0022"
+        utcOriginDate:
+          type: string
+          example: "20200615"
+          description: must be in YYYYMMDD format
+        origin:
+          type: string
+          example: jfk
+        destination:
+          type: string
+          example: bos
+        stdUTC:
+          type: string
+          example: "1100"
+        divertCity:
+          type: string
+          example: dca
+        etaUTC:
+          type: string
+          example: "1240"
+          description: this is ETA to divert city
+      
+    NEW:
+      type: object
+      properties:
+        stg:
+          type: string
+          example: stg2
+        eventType:
+          type: string
+          example: new
+        flightNum:
+          type: string
+          example: "0022"
+        utcOriginDate:
+          type: string
+          example: "20200615"
+          description: must be in YYYYMMDD format
+        origin:
+          type: string
+          example: jfk
+        destination:
+          type: string
+          example: bos
+        stdUTC:
+          type: string
+          example: "1100"
+        staUTC:
+          type: string
+          example: "1240"
+        tailNum:
+          type: string
+          example: "288"
+        nextDayCrossover: 
+          type: boolean
+          example: false
+    ETO:
+      type: object
+      properties:
+        stg:
+          type: string
+          example: stg2
+        eventType:
+          type: string
+          example: eto
+        flightNum:
+          type: string
+          example: "0022"
+        utcOriginDate:
+          type: string
+          example: "20200615"
+          description: must be in YYYYMMDD format
+        origin:
+          type: string
+          example: jfk
+        destination:
+          type: string
+          example: bos
+        stdUTC:
+          type: string
+          example: "1100"
+        etoUTC:
+          type: string
+          example: "1110"   
+      
+    EON:
+      type: object
+      properties:
+        stg:
+          type: string
+          example: stg2
+        eventType:
+          type: string
+          example: eon
+        flightNum:
+          type: string
+          example: "0022"
+        utcOriginDate:
+          type: string
+          example: "20200615"
+          description: must be in YYYYMMDD format
+        origin:
+          type: string
+          example: jfk
+        destination:
+          type: string
+          example: bos
+        stdUTC:
+          type: string
+          example: "1100"
+        eonUTC:
+          type: string
+          example: "1230"   
+      
+    SUB:
+      type: object
+      properties:
+        stg:
+          type: string
+          example: stg2
+        eventType:
+          type: string
+          example: sub
+        flightNum:
+          type: string
+          example: "0022"
+        utcOriginDate:
+          type: string
+          example: "20200615"
+          description: must be in YYYYMMDD format
+        origin:
+          type: string
+          example: jfk
+        destination:
+          type: string
+          example: bos
+        stdUTC:
+          type: string
+          example: "1100"
+        tailNum:
+          type: string
+          example: "288"   
+      
+    ASN:
+      type: object
+      properties:
+        stg:
+          type: string
+          example: stg2
+        eventType:
+          type: string
+          example: asn
+        flightNum:
+          type: string
+          example: "0022"
+        utcOriginDate:
+          type: string
+          example: "20200615"
+          description: must be in YYYYMMDD format
+        origin:
+          type: string
+          example: jfk
+        destination:
+          type: string
+          example: bos
+        stdUTC:
+          type: string
+          example: "1100"
+        tailNum:
+          type: string
+          example: "288"   
+      
+    CNL:
+      type: object
+      properties:
+        stg:
+          type: string
+          example: stg2
+        eventType:
+          type: string
+          example: cnl
+        flightNum:
+          type: string
+          example: "0022"
+        utcOriginDate:
+          type: string
+          example: "20200615"
+          description: must be in YYYYMMDD format
+        origin:
+          type: string
+          example: jfk
+        destination:
+          type: string
+          example: bos
+        stdUTC:
+          type: string
+          example: "1100"
+      
+    DEL:
+      type: object
+      properties:
+        stg:
+          type: string
+          example: stg2
+        eventType:
+          type: string
+          example: del
+        flightNum:
+          type: string
+          example: "0022"
+        utcOriginDate:
+          type: string
+          example: "20200615"
+          description: must be in YYYYMMDD format
+        origin:
+          type: string
+          example: jfk
+        destination:
+          type: string
+          example: bos
+        stdUTC:
+          type: string
+          example: "1100"
+      
+    RIN:
+      type: object
+      properties:
+        stg:
+          type: string
+          example: stg2
+        eventType:
+          type: string
+          example: rin
+        flightNum:
+          type: string
+          example: "0022"
+        utcOriginDate:
+          type: string
+          example: "20200615"
+          description: must be in YYYYMMDD format
+        origin:
+          type: string
+          example: jfk
+        destination:
+          type: string
+          example: bos
+        stdUTC:
+          type: string
+          example: "1100"
+      
+    REM:
+      type: object
+      properties:
+        stg:
+          type: string
+          example: stg2
+        eventType:
+          type: string
+          example: rem
+        flightNum:
+          type: string
+          example: "0022"
+        utcOriginDate:
+          type: string
+          example: "20200615"
+          description: must be in YYYYMMDD format
+        origin:
+          type: string
+          example: jfk
+        destination:
+          type: string
+          example: bos
+        stdUTC:
+          type: string
+          example: "1100"
+      
+    UDD:
+      type: object
+      properties:
+        stg:
+          type: string
+          example: stg2
+        eventType:
+          type: string
+          example: udd
+        flightNum:
+          type: string
+          example: "0022"
+        utcOriginDate:
+          type: string
+          example: "20200615"
+          description: must be in YYYYMMDD format
+        origin:
+          type: string
+          example: jfk
+        destination:
+          type: string
+          example: bos
+        stdUTC:
+          type: string
+          example: "1100"
+      
+    UDA:
+      type: object
+      properties:
+        stg:
+          type: string
+          example: stg2
+        eventType:
+          type: string
+          example: uda
+        flightNum:
+          type: string
+          example: "0022"
+        utcOriginDate:
+          type: string
+          example: "20200615"
+          description: must be in YYYYMMDD format
+        origin:
+          type: string
+          example: jfk
+        destination:
+          type: string
+          example: bos
+        stdUTC:
+          type: string
+          example: "1100"
+      
+    RMD:
+      type: object
+      properties:
+        stg:
+          type: string
+          example: stg2
+        eventType:
+          type: string
+          example: rmd
+        flightNum:
+          type: string
+          example: "0022"
+        utcOriginDate:
+          type: string
+          example: "20200615"
+          description: must be in YYYYMMDD format
+        origin:
+          type: string
+          example: jfk
+        destination:
+          type: string
+          example: bos
+        stdUTC:
+          type: string
+          example: "1100"
+      
+    RMA:
+      type: object
+      properties:
+        stg:
+          type: string
+          example: stg2
+        eventType:
+          type: string
+          example: rma
+        flightNum:
+          type: string
+          example: "0022"
+        utcOriginDate:
+          type: string
+          example: "20200615"
+          description: must be in YYYYMMDD format
+        origin:
+          type: string
+          example: jfk
+        destination:
+          type: string
+          example: bos
+        stdUTC:
+          type: string
+          example: "1100"
+      
+    GRD:
+      type: object
+      properties:
+        stg:
+          type: string
+          example: stg2
+        eventType:
+          type: string
+          example: grd
+        flightNum:
+          type: string
+          example: "0022"
+        utcOriginDate:
+          type: string
+          example: "20200615"
+          description: must be in YYYYMMDD format
+        origin:
+          type: string
+          example: jfk
+        destination:
+          type: string
+          example: bos
+        stdUTC:
+          type: string
+          example: "1100"
+      
+    AIR:
+      type: object
+      properties:
+        stg:
+          type: string
+          example: stg2
+        eventType:
+          type: string
+          example: air
+        flightNum:
+          type: string
+          example: "0022"
+        utcOriginDate:
+          type: string
+          example: "20200615"
+          description: must be in YYYYMMDD format
+        origin:
+          type: string
+          example: jfk
+        destination:
+          type: string
+          example: bos
+        stdUTC:
+          type: string
+          example: "1100"
+      
+    GTD:
+      type: object
+      properties:
+        stg:
+          type: string
+          example: stg2
+        eventType:
+          type: string
+          example: gtd
+        flightNum:
+          type: string
+          example: "0022"
+        utcOriginDate:
+          type: string
+          example: "20200615"
+          description: must be in YYYYMMDD format
+        origin:
+          type: string
+          example: jfk
+        destination:
+          type: string
+          example: bos
+        stdUTC:
+          type: string
+          example: "1100"
+        depGate:
+          type: string
+          example: "32"
+          description: minimum 1 max 4 character
+      
+    GTA:
+      type: object
+      properties:
+        stg:
+          type: string
+          example: stg2
+        eventType:
+          type: string
+          example: gta
+        flightNum:
+          type: string
+          example: "0022"
+        utcOriginDate:
+          type: string
+          example: "20200615"
+          description: must be in YYYYMMDD format
+        origin:
+          type: string
+          example: jfk
+        destination:
+          type: string
+          example: bos
+        stdUTC:
+          type: string
+          example: "1100"
+        arrGate:
+          type: string
+          example: "32"
+          description: minimum 1 max 4 character
+
+          
+    
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+
+    
