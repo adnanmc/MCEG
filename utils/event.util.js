@@ -9,7 +9,7 @@ const sendAdhoc16 = async (data) => {
   let origin = data.origin;
   let destination = data.destination;
   let stdUTC = v(data.stdUTC).padLeft(4, '0');
-  let adhoc16BaseString = `ADH016${flightNum}${utcOriginDate}${origin}${destination}${stdUTC}`;
+  let adhoc16BaseString = `ADH016_${flightNum}${utcOriginDate}${origin}${destination}${stdUTC}`;
   let outUTC;
   let offUTC;
   let onUTC;
