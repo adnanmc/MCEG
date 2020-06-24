@@ -4,9 +4,9 @@ module.exports = {
       name: 'MCEG-API',
       script: 'server.js',
       env: {
-        "PORT": 8000,
-        "ENV": "prod"
-    },
+        PORT: 80,
+        ENV: 'prod',
+      },
       instances: 4,
       exec_mode: 'cluster',
     },
