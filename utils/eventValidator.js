@@ -44,7 +44,7 @@ const adhoc16Schema = joi.object({
     .string()
     .trim()
     .required()
-    .pattern(/^\d{3}[1-9]$/)
+    .pattern(/^(?!0+$)[0-9]{4}$/)
     .messages({
       'string.pattern.base': '"flightNum" must be 4 digit. Ex: 0024',
     }),
