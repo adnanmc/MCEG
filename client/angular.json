@@ -1,12 +1,9 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "cli": {
-    "packageManager": "npm"
-  },
   "newProjectRoot": "projects",
   "projects": {
-    "mceg-client": {
+    "mceg": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/mceg-client",
+            "outputPath": "dist/mceg",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -46,7 +43,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -69,18 +65,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "mceg-client:build"
+            "browserTarget": "mceg:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "mceg-client:build:production"
+              "browserTarget": "mceg:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "mceg-client:build"
+            "browserTarget": "mceg:build"
           }
         },
         "test": {
@@ -117,15 +113,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "mceg-client:serve"
+            "devServerTarget": "mceg:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "mceg-client:serve:production"
+              "devServerTarget": "mceg:serve:production"
             }
           }
         }
       }
-    }},
-  "defaultProject": "mceg-client"
+    }
+  },
+  "defaultProject": "mceg"
 }
