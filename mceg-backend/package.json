@@ -1,7 +1,7 @@
 {
-  "name": "mceg",
+  "name": "mceg-backend",
   "version": "1.0.0",
-  "description": "Movement Control Event Generator REST api + Angular frontend",
+  "description": "Movement Control Event Generator REST api",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
