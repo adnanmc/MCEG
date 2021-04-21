@@ -7,7 +7,7 @@ module.exports = {
         PORT: 80,
         ENV: 'prod',
       },
-      instances: 4,
+      instances: 1,
       exec_mode: 'cluster',
     },
   ],
