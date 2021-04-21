@@ -10,5 +10,5 @@ export class EventsComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  selectedValue: string;
+  selectedValue: string = 'STG2';
 }
