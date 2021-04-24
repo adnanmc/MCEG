@@ -9,6 +9,18 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { EventsComponent } from './components/events/events.component';
 import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatIconModule } from '@angular/material/icon';
+import { MatNativeDateModule } from '@angular/material/core';
+
+const MaterialComponents = [
+  MatSelectModule,
+  MatInputModule,
+  MatDatepickerModule,
+  MatIconModule,
+  MatNativeDateModule,
+];
 
 @NgModule({
   declarations: [
@@ -22,7 +34,7 @@ import { MatSelectModule } from '@angular/material/select';
     FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatSelectModule,
+    MaterialComponents,
   ],
   providers: [],
   bootstrap: [AppComponent],

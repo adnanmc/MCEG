@@ -1,7 +1,7 @@
-const stgRegex = RegExp(/^stg[1-3]$/);
-let stg = "srt4";
-let result = stgRegex.test(stg);
-console.log(result);
+// const stgRegex = RegExp(/^stg[1-3]$/);
+// let stg = "srt4";
+// let result = stgRegex.test(stg);
+// console.log(result);
 // const fs = require("fs");
 // const v = require("voca");
 // const { adhoc16Schema } = require("./utils/eventValidator");
@@ -26,3 +26,29 @@ console.log(result);
 //   console.log("success");
 //   console.log(validation.value);
 // }
+
+const express = require('express');
+const bodyParser = require('body-parser');
+const path = require('path');
+const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.get('/swagger', (req, res) => {
+  res.send({ test: 'different route' });
+});
+// Run the app by serving the static files
+// in the dist directory
+app.use(express.static(path.join(__dirname, 'dist/angular-frontend')));
+
+// Send all other requests to the Angular app
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/angular-frontend/index.html'));
+});
+
+// Start the app by listening on the default
+// Heroku port
+app.listen(8000, () => {
+  console.log(`Started up at port 8000`);
+});
