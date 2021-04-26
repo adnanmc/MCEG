@@ -3,6 +3,7 @@ const cors = require('cors');
 const errorHandler = require('./middleware/error');
 // route files
 const eventRoutes = require('./routes/event.routes');
+const featureConfigRoute = require('./routes/config.routes');
 const flightDataRoutes = require('./routes/flightData.routes');
 const connectDB = require('./config/db.config');
 
@@ -25,6 +26,9 @@ app.use('/api/v1/events', eventRoutes);
 
 // event route
 app.use('/swagger', express.static('swagger'));
+
+// get app feature and config data
+app.use('/api/config', featureConfigRoute);
 
 // event route
 app.use('/', (req, res) => {

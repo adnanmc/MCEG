@@ -1,5 +1,5 @@
-<div class="grid grid-cols-6 gap-2">
-  <div class="flex flex-col">
+<div class="flex flex-row justify-center">
+  <div class="flex flex-col max-w-xs mr-8">
     <mat-form-field appearance="outline">
       <mat-label>MVT ENV</mat-label>
       <mat-select [(ngModel)]="selectedValue" name="env">
@@ -13,7 +13,7 @@
       </mat-select>
     </mat-form-field>
   </div>
-  <div class="flex flex-col">
+  <div class="flex flex-col max-w-xs mr-8">
     <mat-form-field appearance="outline">
       <mat-label>Flight Number</mat-label>
       <input type="text" matInput placeholder="Flight Number" />
@@ -40,5 +40,11 @@
       <mat-label>STD-UTC</mat-label>
       <input type="text" matInput placeholder="Flight Number" />
     </mat-form-field>
+  </div>
+  <div class="flex flex-col max-w-xs mr-8">Event specific input</div>
+  <div class="flex flex-col max-w-xs mr-8">
+    <div>Request URL</div>
+    <div>Request Body</div>
+    <div>Response</div>
   </div>
 </div>

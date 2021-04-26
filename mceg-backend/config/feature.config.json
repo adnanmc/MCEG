@@ -1,0 +1,114 @@
+{
+  "env": [
+    {
+      "name": "STG1",
+      "enable": false
+    },
+    {
+      "name": "STG2",
+      "enable": true
+    },
+    {
+      "name": "STG3",
+      "enable": false
+    }
+  ],
+  "events": [
+    {
+      "name": "OUT",
+      "description": "Aircraft has left the Gate and sets the flight's Actual Departure timestamp. In MVT it changes OUT time in UTC."
+    },
+    {
+      "name": "OFF",
+      "description": "Aircraft has taken off the ground. In MVT it changes OFF time in UTC."
+    },
+    {
+      "name": "ON",
+      "description": "Aircraft On the ground, has landed. In MVT it changes ON time in UTC."
+    },
+    {
+      "name": "IN",
+      "description": "Aircraft at the Gate. In MVT it changes IN time in UTC."
+    },
+    {
+      "name": "ETA",
+      "description": "Estimated time of arrival for a flight. In MVT it changes ETA time in UTC."
+    },
+    {
+      "name": "ETD",
+      "description": "Estimated time of departure for a flight. In MVT it changes ETD time in UTC."
+    },
+    {
+      "name": "ETO",
+      "description": "Estimated Off time for an operated flight. In MVT it changes ETO time in UTC."
+    },
+    {
+      "name": "EON",
+      "description": "Estimated On Time. In MVT it changes EON time in UTC."
+    },
+    {
+      "name": "SUB",
+      "description": "Substitute tail number within the same aircraft equipment family e.g. change in tail number between 32F and 32A. In MVT it changes tail number to the one you give."
+    },
+    {
+      "name": "CNL",
+      "description": "Cancel. A flight segment that will not be operated/flown but is retained as part of the flight schedule. This does not delete the flight from database. Note: A canceled flight can be reinstated, a deleted flight cannot."
+    },
+    {
+      "name": "DEL",
+      "description": "Delete flight from Flight Trac system. Note: Use the NEW event if you need to re-add the deleted flight."
+    },
+    {
+      "name": "GTA",
+      "description": "Arrival gate change. In MVT it will change existing or add if there was no previous arrival gate."
+    },
+    {
+      "name": "GTD",
+      "description": "Departure gate change. In MVT it will change existing or add if there was no previous departure gate."
+    },
+    {
+      "name": "NEW",
+      "description": "Add new flight into the database."
+    },
+    {
+      "name": "RIN",
+      "description": "Reinstate a flight after the it was cancelled. Note: Flight leg becomes same as it was before cancel."
+    },
+    {
+      "name": "ASN",
+      "description": "Initial assignment of a tail number to a flight. Note: Use this to undo REM event."
+    },
+    {
+      "name": "REM",
+      "description": "Remove the tail number associated to the flight. Note: This does not cancel the flight. Use ASN to add a new tail number."
+    },
+    {
+      "name": "UDA",
+      "description": "Undelay Arrival. Removes any arrival delay on the flight."
+    },
+    {
+      "name": "UDD",
+      "description": "Undelay Departure. Removes any departure delay on the flight."
+    },
+    {
+      "name": "RMA",
+      "description": "Remove arrival time on the flight. Note: This removes ON and IN time in MVT."
+    },
+    {
+      "name": "RMD",
+      "description": "Remove departure time on the flight. Note: This removes OUT and OFF time in MVT."
+    },
+    {
+      "name": "AIR",
+      "description": "Air Turnback, makes the return to origin city of a flight that has taken off. Note: Both OUT and OFF time must be present fot that flight."
+    },
+    {
+      "name": "GRD",
+      "description": "Ground Turnback. A scheduled flight that has left the gate, not yet departed, returns to a gate. Note: Only OUT must be present for that flight."
+    },
+    {
+      "name": "DVC",
+      "description": "Divert And Continue. Adds an intermediate stop between the departure and arrival stations of the current flight (ex:  DAL - PHX becomes DAL - HOU - PHX) and Continue to the scheduled arrival station. Note: This breaks the flight into two segment, origin to diversion city and diversion city to original destination."
+    }
+  ]
+}
